@@ -30,4 +30,12 @@ export const GlobalStyles = createGlobalStyle
     ul {
         list-style: none;
     }
+    
+    .App{
+        padding-top: 50px;
+        display: flex;
+        gap: 30px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
 `
