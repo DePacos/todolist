@@ -5,16 +5,15 @@ import {Filter, TaskType} from "../App";
 
 
 
-export type setInputValueType = React.Dispatch<React.SetStateAction<string>>
-
 type TodolistProps = {
     todoId: number,
     title: string,
     date?: string,
     tasksArr: Array<TaskType>,
     changeFilter: (todoId: number, filter:Filter) => void,
-    addTask: (todoId: number, inputValue: string, setInputValue: setInputValueType) => void,
-    removeTask: (todoId: number, taskId: number) => void,
+    changeChecked: (todoId: number, taskId: string) => void,
+    addTask: (todoId: number, inputValue: string) => void,
+    removeTask: (todoId: number, taskId: string) => void,
 }
 
 export const Todolist = (
@@ -24,6 +23,7 @@ export const Todolist = (
         date,
         tasksArr,
         changeFilter,
+        changeChecked,
         addTask,
         removeTask,
     }:TodolistProps) => {
@@ -31,15 +31,32 @@ export const Todolist = (
     const [inputValue, setInputValue] = React.useState('')
 
     const checkInputValue = (e:React.ChangeEvent<HTMLInputElement>) => {
-            setInputValue(e.target.value)
+            setInputValue(e.currentTarget.value)
     }
+
+    const inputKeyHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
+            if(e.ctrlKey && e.charCode === 13){
+                addTask(todoId, inputValue)
+                setInputValue('')
+            }
+    }
+
+    const addTaskHandler = () => {
+        addTask(todoId, inputValue)
+        setInputValue('')
+    }
+
 
     return (
         <S.TodolistWrap>
             <h3>{title}</h3>
             <S.InputWrap>
-                <input onChange={checkInputValue} value={inputValue}/>
-                <Button onClick={() => addTask(todoId, inputValue, setInputValue)}>+</Button>
+                <input
+                    onChange={checkInputValue}
+                    value={inputValue}
+                    onKeyPress={inputKeyHandler}
+                />
+                <Button onClick={addTaskHandler}>+</Button>
             </S.InputWrap>
             <ul>
                 {tasksArr.length !== 0 ?
@@ -47,6 +64,7 @@ export const Todolist = (
                             return (
                                 <li key={item.id}>
                                     <input
+                                        onChange={() => changeChecked(todoId, item.id)}
                                         type="checkbox"
                                         checked={item.isDone}
                                         />
