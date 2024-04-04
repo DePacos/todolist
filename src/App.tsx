@@ -1,12 +1,13 @@
 import React from 'react';
 import './App.css';
-import {setInputValueType, Todolist} from "./components/Todolist";
+import {Todolist} from "./components/Todolist";
 import {data} from "./redux/data";
+import {v1} from "uuid";
 
 
 
 export type TaskType = {
-    id: number,
+    id: string,
     title: string,
     isDone: boolean,
 }
@@ -24,32 +25,43 @@ export type TaskDataType = {
 export const App = () => {
     const [tasksData, setTasks] = React.useState<Array<TaskDataType>>(data)
 
-    const addTask = (todoId: number, inputValue: string, setInputValue: setInputValueType) => {
+    const getCopyTodoData = () => {
+        const copyTodoData:Array<TaskDataType> = structuredClone(tasksData)
+        return copyTodoData
+    }
 
-        const copyTodosData:Array<TaskDataType> = structuredClone(tasksData)
+    const addTask = (todoId: number, inputValue: string) => {
 
-        const newTodosData = copyTodosData.map(itemTodoData => {
+        const newTodosData = getCopyTodoData().map(itemTodoData => {
             if(itemTodoData.id === todoId){
                 itemTodoData.tasks.push(
-                    {id: itemTodoData.tasks.length + 1, title: inputValue, isDone: false})
+                    {id: v1(), title: inputValue, isDone: false})
             }
             return itemTodoData
         })
-            setInputValue('')
             setTasks(newTodosData)
     }
 
-    const removeTask = (todoId: number, taskId: number) => {
+    const removeTask = (todoId: number, taskId: string) => {
 
-        const copyTodosData:Array<TaskDataType> = structuredClone(tasksData)
-
-        const newTodosData = copyTodosData.map(itemTodoData => {
+        const newTodosData = getCopyTodoData().map(itemTodoData => {
             if(itemTodoData.id === todoId){
                 itemTodoData.tasks = itemTodoData.tasks.filter(task => task.id !== taskId)
             }
             return itemTodoData
         })
             setTasks(newTodosData)
+    }
+
+    const changeChecked = (todoId: number, taskId: string) => {
+
+        const newTodosData = getCopyTodoData().map(itemTodoData => {
+            if(itemTodoData.id === todoId){
+                itemTodoData.tasks.map(task => task.id === taskId ? task.isDone = !task.isDone : null)
+            }
+            return itemTodoData
+        })
+        setTasks(newTodosData)
     }
 
     const changeFilter = (todoId: number, filter: Filter) => {
@@ -77,11 +89,13 @@ export const App = () => {
                     }
                     return (
                         <Todolist
+                            key={obj.id}
                             todoId={obj.id}
                             title={obj.title}
                             date={obj.date}
                             tasksArr={visibleTasks(obj.tasks, obj.tasksFilter)}
                             changeFilter={changeFilter}
+                            changeChecked={changeChecked}
                             addTask={addTask}
                             removeTask={removeTask}
                         />
