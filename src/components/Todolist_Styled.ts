@@ -8,6 +8,7 @@ const TodolistWrap = styled.div
         padding: 30px;
         background-color: #9ad2d4;
         box-shadow: 0 2px 6px;
+        max-width: 350px;
         border-radius: 10px;
 
         h3 {
@@ -31,6 +32,7 @@ const InputWrap = styled.div
     `
     display: flex;
     gap: 10px;
+    position: relative;
     height: 30px;
 
     input {
@@ -39,6 +41,12 @@ const InputWrap = styled.div
         border: 1px solid gray;
         border-radius: 10px;
     }
+    span{
+        position: absolute;
+        bottom: -23px;
+        left: 5px;
+        color: red;
+        }
 `
 
 const ButtonWrap = styled.div

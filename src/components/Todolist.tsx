@@ -35,7 +35,7 @@ export const Todolist = (
     }
 
     const inputKeyHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
-            if(e.ctrlKey && e.charCode === 13){
+            if(e.ctrlKey && e.code === 'Enter' && inputValue && inputValue.length <= 21){
                 addTask(todoId, inputValue)
                 setInputValue('')
             }
@@ -46,6 +46,9 @@ export const Todolist = (
         setInputValue('')
     }
 
+    const filterHandler = (filter: Filter) =>{
+        changeFilter(todoId, filter)
+    }
 
     return (
         <S.TodolistWrap>
@@ -56,20 +59,23 @@ export const Todolist = (
                     value={inputValue}
                     onKeyPress={inputKeyHandler}
                 />
-                <Button onClick={addTaskHandler}>+</Button>
+                <Button disabled={!inputValue || inputValue.length > 21} onClick={addTaskHandler}>+</Button>
+                { inputValue.length > 21 && <span>Max task length 20 letters</span>}
             </S.InputWrap>
             <ul>
-                {tasksArr.length !== 0 ?
+            {tasksArr.length !== 0 ?
                     tasksArr.map(item => {
+                        const  changeCheckedHandler = () => {changeChecked(todoId, item.id)}
+                        const  removeTaskHandler = () => {removeTask(todoId, item.id)}
                             return (
                                 <li key={item.id}>
                                     <input
-                                        onChange={() => changeChecked(todoId, item.id)}
+                                        onChange={changeCheckedHandler}
                                         type="checkbox"
                                         checked={item.isDone}
                                         />
                                     <span>{item.title}</span>
-                                    <Button onClick={() => removeTask(todoId, item.id)}>X</Button>
+                                    <Button onClick={removeTaskHandler}>X</Button>
                                 </li>
                             )
                         })
@@ -78,9 +84,9 @@ export const Todolist = (
             </ul>
             {(date) ? <div>{date}</div> : null}
             <S.ButtonWrap>
-                <Button onClick={() => changeFilter(todoId, 'all')}>All</Button>
-                <Button onClick={() => changeFilter(todoId,'active')}>Active</Button>
-                <Button onClick={() => changeFilter(todoId,'completed')}>Completed</Button>
+                <Button onClick={() => filterHandler('all')}>All</Button>
+                <Button onClick={() => filterHandler('active')}>Active</Button>
+                <Button onClick={() => filterHandler('completed')}>Completed</Button>
             </S.ButtonWrap>
         </S.TodolistWrap>
     );

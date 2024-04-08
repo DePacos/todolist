@@ -25,43 +25,34 @@ export type TaskDataType = {
 export const App = () => {
     const [tasksData, setTasks] = React.useState<Array<TaskDataType>>(data)
 
-    const getCopyTodoData = () => {
-        const copyTodoData:Array<TaskDataType> = structuredClone(tasksData)
-        return copyTodoData
+    const getTodoItem = (todoId: number) => {
+        return tasksData.filter(e => e.id === todoId)[0]
+    }
+
+    const updateTasksData = (todoId: number, todoItem: TaskDataType, ) =>{
+        setTasks(tasksData.map(e => e.id === todoId ? todoItem : e))
     }
 
     const addTask = (todoId: number, inputValue: string) => {
 
-        const newTodosData = getCopyTodoData().map(itemTodoData => {
-            if(itemTodoData.id === todoId){
-                itemTodoData.tasks.push(
-                    {id: v1(), title: inputValue, isDone: false})
-            }
-            return itemTodoData
-        })
-            setTasks(newTodosData)
+        const todoItem = getTodoItem(todoId)
+        todoItem.tasks.push({id: v1(), title: inputValue, isDone: false})
+        updateTasksData(todoId, todoItem)
+    }
+
+    const changeChecked = (todoId: number, taskId: string) => {
+        const todoItem = getTodoItem(todoId)
+        const changesTasks = todoItem.tasks.map(e => e.id === taskId ? {...e, isDone: !e.isDone} : e )
+        todoItem.tasks = changesTasks
+        updateTasksData(todoId, todoItem)
     }
 
     const removeTask = (todoId: number, taskId: string) => {
 
-        const newTodosData = getCopyTodoData().map(itemTodoData => {
-            if(itemTodoData.id === todoId){
-                itemTodoData.tasks = itemTodoData.tasks.filter(task => task.id !== taskId)
-            }
-            return itemTodoData
-        })
-            setTasks(newTodosData)
-    }
-
-    const changeChecked = (todoId: number, taskId: string) => {
-
-        const newTodosData = getCopyTodoData().map(itemTodoData => {
-            if(itemTodoData.id === todoId){
-                itemTodoData.tasks.map(task => task.id === taskId ? task.isDone = !task.isDone : null)
-            }
-            return itemTodoData
-        })
-        setTasks(newTodosData)
+        const todoItem = getTodoItem(todoId)
+        const changesTasks = todoItem.tasks.filter(task => task.id !== taskId)
+        todoItem.tasks = changesTasks
+        updateTasksData(todoId, todoItem)
     }
 
     const changeFilter = (todoId: number, filter: Filter) => {
@@ -80,10 +71,10 @@ export const App = () => {
             {Object.values(tasksData).map(obj => {
                     const visibleTasks = (tasks: Array<TaskType>, tasksFilter: String) => {
                         if (tasksFilter === 'active') {
-                            return tasks.filter(item => item.isDone === false)
+                            return tasks.filter(item => !item.isDone)
                         }
                         if (tasksFilter === 'completed') {
-                            return tasks.filter(item => item.isDone === true)
+                            return tasks.filter(item => item.isDone)
                         }
                         return tasks
                     }
