@@ -26,6 +26,9 @@ const TodolistWrap = styled.div
         li span{
             flex-grow: 1;
         }
+        .is-done{
+            opacity: .6;
+        }
     `
 
 const InputWrap = styled.div

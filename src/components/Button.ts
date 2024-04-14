@@ -1,7 +1,10 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
+type ButtonProps = {
+    active?: boolean
+}
 
-export const Button = styled.button
+export const Button = styled.button<ButtonProps>
 `
     font-weight: 600;
     padding: 8px 12px;
@@ -16,4 +19,11 @@ export const Button = styled.button
     &:active {
         transform: translateY(-2px);
     }
+
+${(props) => props.active && css<ButtonProps>
+`
+    transform: scale(1.1);
+    background-color: #c6c6c6;
+`}
+    
 `

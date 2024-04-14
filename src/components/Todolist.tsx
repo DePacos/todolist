@@ -10,6 +10,7 @@ type TodolistProps = {
     title: string,
     date?: string,
     tasksArr: Array<TaskType>,
+    tasksFilter: string,
     changeFilter: (todoId: number, filter:Filter) => void,
     changeChecked: (todoId: number, taskId: string) => void,
     addTask: (todoId: number, inputValue: string) => void,
@@ -23,6 +24,7 @@ export const Todolist = (
         date,
         tasksArr,
         changeFilter,
+        tasksFilter,
         changeChecked,
         addTask,
         removeTask,
@@ -35,7 +37,7 @@ export const Todolist = (
     }
 
     const inputKeyHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
-            if(e.ctrlKey && e.code === 'Enter' && inputValue && inputValue.length <= 21){
+            if(inputValidate(inputValue, 'keyBoard', e)){
                 addTask(todoId, inputValue)
                 setInputValue('')
             }
@@ -50,6 +52,25 @@ export const Todolist = (
         changeFilter(todoId, filter)
     }
 
+    const inputValidate = (inValue: string, typeValidate: string, e?:React.KeyboardEvent<HTMLInputElement>) => {
+        let checkInputLength = inValue.length < 21
+        let checkInputSpace = inValue.trim() === ''
+
+        if(typeValidate === 'button'){
+            if(!inValue || !checkInputLength || checkInputSpace){return true}
+        }
+
+        if(typeValidate === 'keyBoard'){
+            if(e?.ctrlKey && e?.code === 'Enter' && inputValue && !checkInputLength && !checkInputSpace){return true}
+        }
+
+        if(typeValidate === 'message'){
+           return !checkInputLength
+        }
+
+        return false
+    }
+
     return (
         <S.TodolistWrap>
             <h3>{title}</h3>
@@ -59,8 +80,8 @@ export const Todolist = (
                     value={inputValue}
                     onKeyPress={inputKeyHandler}
                 />
-                <Button disabled={!inputValue || inputValue.length > 21} onClick={addTaskHandler}>+</Button>
-                { inputValue.length > 21 && <span>Max task length 20 letters</span>}
+                <Button disabled={inputValidate(inputValue, 'button')} onClick={addTaskHandler}>+</Button>
+                {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
             </S.InputWrap>
             <ul>
             {tasksArr.length !== 0 ?
@@ -68,7 +89,7 @@ export const Todolist = (
                         const  changeCheckedHandler = () => {changeChecked(todoId, item.id)}
                         const  removeTaskHandler = () => {removeTask(todoId, item.id)}
                             return (
-                                <li key={item.id}>
+                                <li key={item.id} className={item.isDone ? 'is-done' : ''}>
                                     <input
                                         onChange={changeCheckedHandler}
                                         type="checkbox"
@@ -82,11 +103,11 @@ export const Todolist = (
                         : <span>No Tasks</span>
                 }
             </ul>
-            {(date) ? <div>{date}</div> : null}
+            {date ? <div>{date}</div> : null}
             <S.ButtonWrap>
-                <Button onClick={() => filterHandler('all')}>All</Button>
-                <Button onClick={() => filterHandler('active')}>Active</Button>
-                <Button onClick={() => filterHandler('completed')}>Completed</Button>
+                <Button active={tasksFilter === 'all'} onClick={() => filterHandler('all')}>All</Button>
+                <Button active={tasksFilter === 'active'} onClick={() => filterHandler('active')}>Active</Button>
+                <Button active={tasksFilter === 'completed'} onClick={() => filterHandler('completed')}>Completed</Button>
             </S.ButtonWrap>
         </S.TodolistWrap>
     );

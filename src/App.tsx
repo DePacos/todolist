@@ -36,7 +36,7 @@ export const App = () => {
     const addTask = (todoId: number, inputValue: string) => {
 
         const todoItem = getTodoItem(todoId)
-        todoItem.tasks.push({id: v1(), title: inputValue, isDone: false})
+        todoItem.tasks = [...todoItem.tasks, {id: v1(), title: inputValue, isDone: false}]
         updateTasksData(todoId, todoItem)
     }
 
@@ -68,8 +68,8 @@ export const App = () => {
 
     return (
         <div className="App">
-            {Object.values(tasksData).map(obj => {
-                    const visibleTasks = (tasks: Array<TaskType>, tasksFilter: String) => {
+            {tasksData.map(todoItem => {
+                    const visibleTasks = (tasks: Array<TaskType>, tasksFilter: string) => {
                         if (tasksFilter === 'active') {
                             return tasks.filter(item => !item.isDone)
                         }
@@ -80,11 +80,12 @@ export const App = () => {
                     }
                     return (
                         <Todolist
-                            key={obj.id}
-                            todoId={obj.id}
-                            title={obj.title}
-                            date={obj.date}
-                            tasksArr={visibleTasks(obj.tasks, obj.tasksFilter)}
+                            key={todoItem.id}
+                            todoId={todoItem.id}
+                            title={todoItem.title}
+                            date={todoItem.date}
+                            tasksArr={visibleTasks(todoItem.tasks, todoItem.tasksFilter)}
+                            tasksFilter={todoItem.tasksFilter}
                             changeFilter={changeFilter}
                             changeChecked={changeChecked}
                             addTask={addTask}
