@@ -10,23 +10,39 @@ const TodolistWrap = styled.div
         box-shadow: 0 2px 6px;
         max-width: 350px;
         border-radius: 10px;
+        position: relative;
+
+        > button:first-of-type {
+            background-color: #e65555;
+            position: absolute;
+            right: 0;
+        }
+
+        > button:last-of-type {
+            background-color: #538d53;
+            position: absolute;
+            left: 0;
+        }
 
         h3 {
             text-align: center;
         }
-        li{
+
+        li {
             display: flex;
             align-items: center;
             margin-bottom: 5px;
         }
-        
-        li input{
+
+        li input {
             margin-right: 10px;
         }
-        li span{
+
+        li span {
             flex-grow: 1;
         }
-        .is-done{
+
+        .is-done {
             opacity: .6;
         }
     `

@@ -1,20 +1,22 @@
 import React from 'react';
 import {Button} from "./Button";
 import {S} from "./Todolist_Styled";
-import {Filter, TaskType} from "../App";
+import {Filter, TasksListsType} from "../App";
 
 
 
 type TodolistProps = {
-    todoId: number,
+    todoId: string,
     title: string,
     date?: string,
-    tasksArr: Array<TaskType>,
+    tasks: Array<TasksListsType>,
     tasksFilter: string,
-    changeFilter: (todoId: number, filter:Filter) => void,
-    changeChecked: (todoId: number, taskId: string) => void,
-    addTask: (todoId: number, inputValue: string) => void,
-    removeTask: (todoId: number, taskId: string) => void,
+    changeFilter: (todoId: string, filter:Filter) => void,
+    changeChecked: (todoId: string, taskId: string) => void,
+    addTask: (todoId: string, inputValue: string) => void,
+    addTodo: () => void,
+    removeTask: (todoId: string, taskId: string) => void,
+    removeTodo: (todoId: string) => void,
 }
 
 export const Todolist = (
@@ -22,18 +24,39 @@ export const Todolist = (
         todoId,
         title,
         date,
-        tasksArr,
+        tasks,
         changeFilter,
         tasksFilter,
         changeChecked,
         addTask,
+        addTodo,
         removeTask,
+        removeTodo,
     }:TodolistProps) => {
 
     const [inputValue, setInputValue] = React.useState('')
 
     const checkInputValue = (e:React.ChangeEvent<HTMLInputElement>) => {
             setInputValue(e.currentTarget.value)
+    }
+
+    const inputValidate = (inValue: string, typeValidate: string, e?:React.KeyboardEvent<HTMLInputElement>) => {
+        let checkInputLength = inValue.length < 21
+        let checkInputSpace = inValue.trim() === ''
+
+        if(typeValidate === 'button'){
+            if(!inValue || !checkInputLength || checkInputSpace){return true}
+        }
+
+        if(typeValidate === 'keyBoard'){
+            if(e?.ctrlKey && e?.code === 'Enter' && inValue && checkInputLength && !checkInputSpace){return true}
+        }
+
+        if(typeValidate === 'message'){
+            return !checkInputLength
+        }
+
+        return false
     }
 
     const inputKeyHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
@@ -52,28 +75,19 @@ export const Todolist = (
         changeFilter(todoId, filter)
     }
 
-    const inputValidate = (inValue: string, typeValidate: string, e?:React.KeyboardEvent<HTMLInputElement>) => {
-        let checkInputLength = inValue.length < 21
-        let checkInputSpace = inValue.trim() === ''
+    const addTodoHandler = () =>{
+        addTodo()
+    }
 
-        if(typeValidate === 'button'){
-            if(!inValue || !checkInputLength || checkInputSpace){return true}
-        }
-
-        if(typeValidate === 'keyBoard'){
-            if(e?.ctrlKey && e?.code === 'Enter' && inputValue && !checkInputLength && !checkInputSpace){return true}
-        }
-
-        if(typeValidate === 'message'){
-           return !checkInputLength
-        }
-
-        return false
+    const removeTodoHandler = () =>{
+        removeTodo(todoId)
     }
 
     return (
         <S.TodolistWrap>
+            <Button onClick={removeTodoHandler}>X</Button>
             <h3>{title}</h3>
+            <Button onClick={addTodoHandler}>+</Button>
             <S.InputWrap>
                 <input
                     onChange={checkInputValue}
@@ -84,18 +98,18 @@ export const Todolist = (
                 {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
             </S.InputWrap>
             <ul>
-            {tasksArr.length !== 0 ?
-                    tasksArr.map(item => {
-                        const  changeCheckedHandler = () => {changeChecked(todoId, item.id)}
-                        const  removeTaskHandler = () => {removeTask(todoId, item.id)}
+            {tasks.length !== 0 ?
+                    tasks.map(task => {
+                        const  changeCheckedHandler = () => {changeChecked(todoId, task.id)}
+                        const  removeTaskHandler = () => {removeTask(todoId, task.id)}
                             return (
-                                <li key={item.id} className={item.isDone ? 'is-done' : ''}>
+                                <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                     <input
                                         onChange={changeCheckedHandler}
                                         type="checkbox"
-                                        checked={item.isDone}
+                                        checked={task.isDone}
                                         />
-                                    <span>{item.title}</span>
+                                    <span>{task.title}</span>
                                     <Button onClick={removeTaskHandler}>X</Button>
                                 </li>
                             )
