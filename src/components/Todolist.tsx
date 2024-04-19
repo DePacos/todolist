@@ -71,46 +71,42 @@ export const Todolist = (
         setInputValue('')
     }
 
-    const filterHandler = (filter: Filter) =>{
-        changeFilter(todoId, filter)
-    }
+    const filterHandler = (filter: Filter) =>{changeFilter(todoId, filter)}
 
-    const addTodoHandler = () =>{
-        addTodo()
-    }
+    const  changeCheckedHandler = (taskId: string) => {changeChecked(todoId, taskId)}
 
-    const removeTodoHandler = () =>{
-        removeTodo(todoId)
-    }
+    const  removeTaskHandler = (taskId: string) => {removeTask(todoId, taskId)}
+
+    const addTodoHandler = () =>{addTodo()}
+
+    const removeTodoHandler = () =>{removeTodo(todoId)}
 
     return (
         <S.TodolistWrap>
-            <Button onClick={removeTodoHandler}>X</Button>
+            <Button title="X" callback={removeTodoHandler}/>
             <h3>{title}</h3>
-            <Button onClick={addTodoHandler}>+</Button>
+            <Button title="+" callback={addTodoHandler}/>
             <S.InputWrap>
                 <input
                     onChange={checkInputValue}
                     value={inputValue}
                     onKeyPress={inputKeyHandler}
                 />
-                <Button disabled={inputValidate(inputValue, 'button')} onClick={addTaskHandler}>+</Button>
+                <Button disabled={inputValidate(inputValue, 'button')} title="+" callback={addTaskHandler}/>
                 {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
             </S.InputWrap>
             <ul>
             {tasks.length !== 0 ?
                     tasks.map(task => {
-                        const  changeCheckedHandler = () => {changeChecked(todoId, task.id)}
-                        const  removeTaskHandler = () => {removeTask(todoId, task.id)}
                             return (
                                 <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                     <input
-                                        onChange={changeCheckedHandler}
+                                        onChange={() => changeCheckedHandler(task.id)}
                                         type="checkbox"
                                         checked={task.isDone}
                                         />
                                     <span>{task.title}</span>
-                                    <Button onClick={removeTaskHandler}>X</Button>
+                                    <Button title="X" callback={() => removeTaskHandler(task.id)}/>
                                 </li>
                             )
                         })
@@ -119,9 +115,9 @@ export const Todolist = (
             </ul>
             {date ? <div>{date}</div> : null}
             <S.ButtonWrap>
-                <Button active={tasksFilter === 'all'} onClick={() => filterHandler('all')}>All</Button>
-                <Button active={tasksFilter === 'active'} onClick={() => filterHandler('active')}>Active</Button>
-                <Button active={tasksFilter === 'completed'} onClick={() => filterHandler('completed')}>Completed</Button>
+                <Button active={tasksFilter === 'all'} title="All" callback={() => filterHandler('all')}/>
+                <Button active={tasksFilter === 'active'} title="Active" callback={() => filterHandler('active')}/>
+                <Button active={tasksFilter === 'completed'} title="Completed" callback={() => filterHandler('completed')}/>
             </S.ButtonWrap>
         </S.TodolistWrap>
     );

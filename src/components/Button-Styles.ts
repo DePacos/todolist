@@ -4,7 +4,7 @@ type ButtonProps = {
     active?: boolean
 }
 
-export const Button = styled.button<ButtonProps>
+export const ButtonStyles = styled.button<ButtonProps>
 `
     font-weight: 600;
     padding: 8px 12px;
@@ -27,3 +27,7 @@ ${(props) => props.active && css<ButtonProps>
 `}
     
 `
+
+export const S = {
+    ButtonStyles
+}
