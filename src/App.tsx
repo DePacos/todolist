@@ -40,24 +40,23 @@ export const App = () => {
 
     const removeTodo = (todoId: string) => {
         setTodoLists(todoLists.filter(todo => todo.id !== todoId))
+        delete tasksLists[todoId]
+        setTasksLists({...tasksLists})
     }
 
     const addTask = (todoId: string, inputValue: string) => {
-        let newTasksLists = structuredClone(tasksLists)
-        newTasksLists[todoId] = [...tasksLists[todoId], {id: v1(), title: inputValue, isDone: false}]
-        setTasksLists(newTasksLists)
+        tasksLists[todoId] = [...tasksLists[todoId], {id: v1(), title: inputValue, isDone: false}]
+        setTasksLists({...tasksLists})
     }
 
     const changeChecked = (todoId: string, taskId: string) => {
-        let newTasksLists = structuredClone(tasksLists)
-        newTasksLists[todoId] = tasksLists[todoId].map(e => e.id === taskId ? {...e, isDone: !e.isDone} : e )
-        setTasksLists(newTasksLists)
+        tasksLists[todoId] = tasksLists[todoId].map(e => e.id === taskId ? {...e, isDone: !e.isDone} : e )
+        setTasksLists({...tasksLists})
     }
 
     const removeTask = (todoId: string, taskId: string) => {
-        let newTasksLists = structuredClone(tasksLists)
-        newTasksLists[todoId] = tasksLists[todoId].filter(task => task.id !== taskId)
-        setTasksLists(newTasksLists)
+        tasksLists[todoId] = tasksLists[todoId].filter(task => task.id !== taskId)
+        setTasksLists({...tasksLists})
     }
 
     const changeFilter = (todoId: string, filter: Filter) => {
