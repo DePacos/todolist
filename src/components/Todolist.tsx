@@ -1,7 +1,7 @@
 import React from 'react';
 import {Button} from "./Button";
 import {S} from "./Todolist_Styled";
-import {Filter, TasksListsType} from "../App";
+import {Filter, TasksStateType, TasksType} from "../App";
 
 
 
@@ -9,14 +9,14 @@ type TodolistProps = {
     todoId: string,
     title: string,
     date?: string,
-    tasks: Array<TasksListsType>,
+    tasks: TasksStateType,
     tasksFilter: string,
     changeFilter: (todoId: string, filter:Filter) => void,
     changeChecked: (todoId: string, taskId: string) => void,
     addTask: (todoId: string, inputValue: string) => void,
     addTodo: () => void,
     removeTask: (todoId: string, taskId: string) => void,
-    removeTodo: (todoId: string) => void,
+    removeTodoList: (todoId: string) => void,
 }
 
 export const Todolist = (
@@ -31,10 +31,22 @@ export const Todolist = (
         addTask,
         addTodo,
         removeTask,
-        removeTodo,
+        removeTodoList,
     }:TodolistProps) => {
 
     const [inputValue, setInputValue] = React.useState('')
+
+    const changeTasksFilter = (tasks: Array<TasksType>) =>{
+        if (tasksFilter === 'active') {
+            return tasks.filter(task => !task.isDone)
+        }
+
+        if (tasksFilter === 'completed') {
+            return tasks.filter(task => task.isDone)
+        }
+
+        return tasks
+    }
 
     const checkInputValue = (e:React.ChangeEvent<HTMLInputElement>) => {
             setInputValue(e.currentTarget.value)
@@ -79,7 +91,7 @@ export const Todolist = (
 
     const addTodoHandler = () =>{addTodo()}
 
-    const removeTodoHandler = () =>{removeTodo(todoId)}
+    const removeTodoHandler = () =>{removeTodoList(todoId)}
 
     return (
         <S.TodolistWrap>
@@ -96,8 +108,8 @@ export const Todolist = (
                 {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
             </S.InputWrap>
             <ul>
-            {tasks.length !== 0 ?
-                    tasks.map(task => {
+            {changeTasksFilter(tasks[todoId]).length !== 0 ?
+                changeTasksFilter(tasks[todoId]).map(task => {
                             return (
                                 <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                     <input
