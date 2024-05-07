@@ -73,6 +73,10 @@ export const Todolist = (
         changeTitleTodo(todoId, titleValue)
     }
 
+    const changeTitleTaskHandler = (titleValue: string, taskId:string) => {
+        changeTaskTitle(todoId, taskId, titleValue)
+    }
+
     return (
         <S.TodolistWrap>
             <Button title="X" callback={removeTodoHandler}/>
@@ -82,10 +86,6 @@ export const Todolist = (
                 {changeTasksFilter(tasks[todoId]).length !== 0 ?
                     changeTasksFilter(tasks[todoId]).map(task => {
 
-                        const changeTitleTaskHandler = (titleValue: string) => {
-                            changeTaskTitle(todoId, task.id, titleValue)
-                        }
-
                         return (
                             <li key={task.id} className={task.isDone ? 'is-done' : ''}>
                                 <input
@@ -93,7 +93,8 @@ export const Todolist = (
                                     type="checkbox"
                                     checked={task.isDone}
                                 />
-                                <EditableSpan title={task.title} onChange={changeTitleTaskHandler}/>
+                                <EditableSpan title={task.title}
+                                              onChange={(titleValue) => changeTitleTaskHandler(titleValue, task.id)}/>
                                 <Button title="X" callback={() => removeTaskHandler(task.id)}/>
                             </li>
                         )

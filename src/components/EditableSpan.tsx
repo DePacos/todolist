@@ -7,14 +7,10 @@ type PropsType = {
 
 export const EditableSpan = ({title, onChange}: PropsType) => {
     const [editMode, setEditConst] = React.useState(false)
-    const [localTitle, setLocalTitle] = React.useState('')
+    const [localTitle, setLocalTitle] = React.useState(title)
 
-    const activeEditMode = () => {
-        setEditConst(true)
-        setLocalTitle(title)
-    }
-    const activeViewMode = () => {
-        setEditConst(false)
+    const activeMode = () => {
+        setEditConst(!editMode)
         onChange(localTitle)
     }
 
@@ -24,7 +20,7 @@ export const EditableSpan = ({title, onChange}: PropsType) => {
 
     return (
         editMode
-            ? <input onChange={handlerOnChange}  onBlur={activeViewMode} value={localTitle} autoFocus/>
-            : <span onDoubleClick={activeEditMode}>{title}</span>
+            ? <input onChange={handlerOnChange}  onBlur={activeMode} value={localTitle} autoFocus/>
+            : <span onDoubleClick={activeMode}>{localTitle}</span>
     );
 };

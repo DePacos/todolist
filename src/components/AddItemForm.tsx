@@ -53,7 +53,7 @@ export const AddItemForm = ({addItem}:PropsType) => {
                 onKeyPress={inputKeyHandler}
             />
             {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
-            <Button disabled={inputValidate(inputValue, 'button')} title="++" callback={addItemHandler}/>
+            <Button disabled={inputValidate(inputValue, 'button')} title="+" callback={addItemHandler}/>
         </S.InputWrap>
     )
 }
