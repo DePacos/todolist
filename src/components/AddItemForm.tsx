@@ -1,6 +1,15 @@
 import React from "react";
-import {Button} from "./Button";
-import {S} from "./Todolist_Styled";
+import {BasicButton} from "./Button";
+import {Controller, useForm, SubmitHandler} from "react-hook-form";
+import {SM} from "../styles/material-styles";
+import TextField from "@mui/material/TextField";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+
+type Input = {
+    task: string
+}
 
 type PropsType = {
     addItem: (inputValue: string) => void
@@ -8,52 +17,58 @@ type PropsType = {
 
 export const AddItemForm = ({addItem}:PropsType) => {
 
-    const [inputValue, setInputValue] = React.useState('')
+    const {
+        control,
+        handleSubmit,
+        formState: {errors}, reset} = useForm<Input>({
+            defaultValues: {
+                task: "",
+            },
+            mode: "onChange"
+    })
 
-    const checkInputValue = (e:React.ChangeEvent<HTMLInputElement>) => {
-        setInputValue(e.currentTarget.value)
-    }
-
-    const inputValidate = (inValue: string, typeValidate: string, e?:React.KeyboardEvent<HTMLInputElement>) => {
-        let checkInputLength = inValue.length < 21
-        let checkInputSpace = inValue.trim() === ''
-
-        if(typeValidate === 'button'){
-            if(!inValue || !checkInputLength || checkInputSpace){return true}
-        }
-
-        if(typeValidate === 'keyBoard'){
-            if(e?.ctrlKey && e?.code === 'Enter' && inValue && checkInputLength && !checkInputSpace){return true}
-        }
-
-        if(typeValidate === 'message'){
-            return !checkInputLength
-        }
-
-        return false
-    }
-
-    const inputKeyHandler = (e:React.KeyboardEvent<HTMLInputElement>) => {
-        if(inputValidate(inputValue, 'keyBoard', e)){
-            addItem(inputValue)
-            setInputValue('')
-        }
-    }
-
-    const addItemHandler = () =>{
-        addItem(inputValue)
-        setInputValue('')
+    const onSubmit: SubmitHandler<Input> = (data) => {
+        addItem(data.task)
+        reset()
     }
 
     return(
-        <S.InputWrap>
-            <input
-                onChange={checkInputValue}
-                value={inputValue}
-                onKeyPress={inputKeyHandler}
-            />
-            {inputValidate(inputValue, 'message') && <span>Max task length 20 letters</span>}
-            <Button disabled={inputValidate(inputValue, 'button')} title="+" callback={addItemHandler}/>
-        </S.InputWrap>
+        <Box sx={SM.wrapTaskInput}>
+            <form onSubmit={handleSubmit(onSubmit)}>
+                <Controller
+                    name={'task'}
+                    rules={{
+                        required: true,
+                        minLength: 3,
+                        maxLength: 20,
+                    }}
+                    render={({field: {onChange, value}}) => <TextField
+                        error={!!errors.task}
+                        onChange={onChange}
+                        sx={SM.addTaskInput}
+                        value={value || ''}
+                        label="Add task"
+                        variant="outlined"
+                        size={"small"}
+                        // helperText={errors.task ? 'Please enter a value between 3 and 20 characters': ''}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <PlaylistAddCheckIcon/>
+                                </InputAdornment>)
+                        }}
+                    />}
+                    control={control}
+                />
+                <BasicButton
+                    disabled={!!errors.task}
+                    title="Add"
+                    type={'submit'}
+                    color={"success"}
+                    variant={"contained"}
+                />
+                {errors.task && <span className='errorMassage'>Please enter a value between 3 and 20 characters</span>}
+            </form>
+        </Box>
     )
 }
