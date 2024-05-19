@@ -1,4 +1,5 @@
 import React from "react";
+import TextField from "@mui/material/TextField";
 
 type PropsType = {
     title: string
@@ -20,7 +21,15 @@ export const EditableSpan = ({title, onChange}: PropsType) => {
 
     return (
         editMode
-            ? <input onChange={handlerOnChange}  onBlur={activeMode} value={localTitle} autoFocus/>
-            : <span onDoubleClick={activeMode}>{localTitle}</span>
+            ? <TextField
+                id="filled-basic"
+                label="Title Todo"
+                variant="standard"
+                onChange={handlerOnChange}
+                onBlur={activeMode}
+                value={localTitle}
+                autoFocus
+            />
+            : <span title="Doubble click for editing" onDoubleClick={activeMode}>{localTitle}</span>
     );
 };
