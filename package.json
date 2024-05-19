@@ -4,6 +4,10 @@
   "private": true,
   "dependencies": {
     "@babel/core": "^7.16.0",
+    "@emotion/react": "^11.11.4",
+    "@emotion/styled": "^11.11.5",
+    "@mui/icons-material": "^5.15.16",
+    "@mui/material": "^5.15.16",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.14.1",
@@ -49,6 +53,7 @@
     "react-app-polyfill": "^3.0.0",
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.4",
     "react-refresh": "^0.11.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
