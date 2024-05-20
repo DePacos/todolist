@@ -1,10 +1,19 @@
 import React from 'react';
-import {Button} from "./Button";
-import {S} from "./Todolist_Styled";
+import {BasicButton} from "./Button";
 import {Filter, TasksStateType, TasksType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 
+import DeleteIcon from '@mui/icons-material/Delete';
+import IconButton from "@mui/material/IconButton";
+import CancelIcon from '@mui/icons-material/Cancel';
+import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
+import Paper from "@mui/material/Paper";
+import Checkbox from '@mui/material/Checkbox';
+import {SM} from '../styles/material-styles'
+import Box from "@mui/material/Box";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 
 type TodolistProps = {
     todoId: string,
@@ -78,37 +87,41 @@ export const Todolist = (
     }
 
     return (
-        <S.TodolistWrap>
-            <Button title="X" callback={removeTodoHandler}/>
-            <h3><EditableSpan title={title} onChange={handlerChangeTitleTodo}/></h3>
+        <Paper elevation={6} sx={SM.wrapTodoList}>
+            <h2><EditableSpan title={title} onChange={handlerChangeTitleTodo}/></h2>
+            <IconButton sx={SM.closeTodo} onClick={removeTodoHandler}>
+                <CancelIcon/>
+            </IconButton>
             <AddItemForm addItem={addTasksHandler}/>
-            <ul>
+            <List>
                 {changeTasksFilter(tasks[todoId]).length !== 0 ?
                     changeTasksFilter(tasks[todoId]).map(task => {
-
                         return (
-                            <li key={task.id} className={task.isDone ? 'is-done' : ''}>
-                                <input
+                            <ListItem key={task.id} sx={SM.getListStyles(task.isDone)}>
+                                <Checkbox
                                     onChange={() => changeCheckedHandler(task.id)}
-                                    type="checkbox"
+                                    color={"success"}
                                     checked={task.isDone}
+                                    checkedIcon={<DoneOutlineIcon/>}
                                 />
                                 <EditableSpan title={task.title}
                                               onChange={(titleValue) => changeTitleTaskHandler(titleValue, task.id)}/>
-                                <Button title="X" callback={() => removeTaskHandler(task.id)}/>
-                            </li>
+                                <IconButton onClick={() => removeTaskHandler(task.id)}>
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItem>
                         )
                     })
                     : <span>No Tasks</span>
                 }
-            </ul>
+            </List>
             {date ? <div>{date}</div> : null}
-            <S.ButtonWrap>
-                <Button active={tasksFilter === 'all'} title="All" callback={() => filterHandler('all')}/>
-                <Button active={tasksFilter === 'active'} title="Active" callback={() => filterHandler('active')}/>
-                <Button active={tasksFilter === 'completed'} title="Completed"
-                        callback={() => filterHandler('completed')}/>
-            </S.ButtonWrap>
-        </S.TodolistWrap>
+            <Box sx={SM.wrapStatusBtn}>
+                <BasicButton variant={(tasksFilter === 'all') ? 'outlined' : 'contained'} color={'success'} title="All" onClick={() => filterHandler('all')}/>
+                <BasicButton variant={(tasksFilter === 'active') ? 'outlined' : 'contained'} color={'success'} title="Active" onClick={() => filterHandler('active')}/>
+                <BasicButton variant={(tasksFilter === 'completed') ? 'outlined' : 'contained'} color={'success'} title="Completed" onClick={() => filterHandler('completed')}/>
+            </Box>
+        </Paper>
     );
 }
+
