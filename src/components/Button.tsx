@@ -1,16 +1,30 @@
 import React from 'react';
-import {S} from './Button-Styles'
+import Button from "@mui/material/Button";
 
+type ButtonType = "submit" | "button" | undefined
+type ColorType = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined
+type VariantType = "text" | "outlined" | "contained" | undefined
 
 type ButtonProps = {
     title: string
-    callback: () => void
+    type?: ButtonType
+    onClick?: () => void
     disabled?: boolean
-    active?: boolean
+
+    variant?: VariantType
+    color?: ColorType
 }
 
-export const Button = ({title, callback, disabled, active}: ButtonProps) => {
+export const BasicButton = ({title, onClick, disabled, variant, color, type}: ButtonProps) => {
+
     return (
-        <S.ButtonStyles active={active} disabled={disabled} onClick={callback}>{title}</S.ButtonStyles>
+        <Button
+            onClick={onClick}
+            disabled={disabled}
+            type={type}
+            variant={variant}
+            color={color}
+        >
+            {title}</Button>
     );
 };
