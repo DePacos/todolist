@@ -1,13 +1,33 @@
 import React from 'react';
 import './App.css';
-import {Todolist} from "./components/Todolist";
 import {todoDataLists, tasksDataLists} from "./redux/data";
+import {
+    AddTodolistAC,
+    ChangeTodolistFilterAC,
+    ChangeTodolistTitleAC,
+    RemoveTodolistAC,
+    todolistReducer
+} from "./model/todolist-reducer";
+import {
+    AddEmptyTaskAC,
+    AddTaskAC,
+    ChangeTaskStatusAC,
+    ChangeTaskTitleAC, RemoveTaskAC,
+    taskReducer,
+    UpdateTasksAC
+} from "./model/task-reducer"
 import {v1} from "uuid";
+import {Todolist} from "./components/Todolist";
 import {AddItemForm} from "./components/AddItemForm";
-
-
+import {Header} from "./components/Header";
+import Box from "@mui/material/Box";
+import {SM} from "../src/styles/material-styles";
+import {createTheme, ThemeProvider} from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export type Filter = 'all' | 'active' | 'completed'
+
+type ThemeMode = 'dark' | 'light'
 
 export type TodoListsType = {
     id: string,
@@ -23,78 +43,96 @@ export type TasksType = {
 }
 
 export type TasksStateType = {
-    [key:string]: Array<TasksType>
+    [key: string]: Array<TasksType>
 }
 
 export const App = () => {
+    const [themeMode, setThemeMode] = React.useState<ThemeMode>('light')
 
-    const [todoLists, setTodoLists] = React.useState<Array<TodoListsType>>(todoDataLists)
-    const [tasks, setTasks] = React.useState<TasksStateType>(tasksDataLists)
+    const changeModeHandler = () => {
+        setThemeMode(themeMode === 'light' ? 'dark' : 'light')
+    }
+
+    const theme = createTheme({
+        palette: {
+            mode: themeMode === 'light' ? 'light' : 'dark',
+            primary: {
+                main: '#087EA4',
+            },
+        },
+    })
+
+    const [todoLists, dispatchTodolist] = React.useReducer(todolistReducer, todoDataLists)
+    const [tasks, dispatchTask] = React.useReducer(taskReducer, tasksDataLists)
+
+    const addTodolist = (titleTodolist: string) => {
+        let id = v1()
+        dispatchTask(AddEmptyTaskAC(id))
+        dispatchTodolist(AddTodolistAC(id, titleTodolist))
+    }
 
     const removeTodoList = (todoId: string) => {
-        setTodoLists(todoLists.filter(todo => todo.id !== todoId))
+        dispatchTodolist(RemoveTodolistAC(todoId))
         delete tasks[todoId]
-        setTasks({...tasks})
+        dispatchTask(UpdateTasksAC())
     }
 
     const addTask = (todoId: string, inputValue: string) => {
-        setTasks({...tasks,
-            [todoId]: [...tasks[todoId], {id: v1(), title: inputValue, isDone: false}]})
+        dispatchTask(AddTaskAC(todoId, inputValue))
     }
 
-    const changeChecked = (todoId: string, taskId: string) => {
-        setTasks({...tasks,
-            [todoId]: tasks[todoId].map(e => e.id === taskId ? {...e, isDone: !e.isDone} : e )})
+    const changeTaskStatus = (todoId: string, taskId: string) => {
+        dispatchTask(ChangeTaskStatusAC(todoId, taskId))
     }
 
-    const changeFilter = (todoId: string, tasksFilter: Filter) => {
-        const newTodosLists = todoLists.map(todo => todo.id === todoId ? {...todo, tasksFilter} : todo)
-        setTodoLists(newTodosLists)
+    const changeTaskFilter = (todoId: string, tasksFilter: Filter) => {
+        dispatchTodolist(ChangeTodolistFilterAC(todoId, tasksFilter))
     }
 
     const changeTaskTitle = (todoId: string, taskId: string, value: string) => {
-        setTasks({...tasks, [todoId]: tasks[todoId].map((e => e.id === taskId ? {...e, title: value} : e))})
+        dispatchTask(ChangeTaskTitleAC(taskId, taskId, value))
     }
 
-    const changeTitleTodo = (todoId: string, titleValue: string) =>{
-        setTodoLists(todoLists.map((e => e.id === todoId ? {...e, title: titleValue}: e)))
+    const changeTitleTodolist = (todoId: string, titleValue: string) => {
+        dispatchTodolist(ChangeTodolistTitleAC(todoId, titleValue))
     }
 
     const removeTask = (todoId: string, taskId: string) => {
-        setTasks({...tasks,
-            [todoId]: tasks[todoId].filter(task => task.id !== taskId)})
-    }
-
-    const handlerAddTodo = (inputValue: string) =>{
-        let id = v1()
-        setTasks({...tasks, [id]: []})
-        setTodoLists([...todoLists, {id: id, title: inputValue, date: '', tasksFilter: 'all'}])
+        dispatchTask(RemoveTaskAC(todoId, taskId))
     }
 
     return (
-        <div className="App">
-            <AddItemForm addItem={handlerAddTodo}/>
-            {todoLists.map(todo => {
-                    return (
-                        <Todolist
-                            key={todo.id}
-                            todoId={todo.id}
-                            title={todo.title}
-                            date={todo.date}
-                            tasksFilter={todo.tasksFilter}
-                            tasks={tasks}
-                            changeFilter={changeFilter}
-                            changeChecked={changeChecked}
-                            changeTitleTodo={changeTitleTodo}
-                            changeTaskTitle={changeTaskTitle}
-                            addTask={addTask}
-                            removeTask={removeTask}
-                            removeTodoList={removeTodoList}
-                        />
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <div className="App">
+                <Header theme={theme} changeModeHandler={changeModeHandler}/>
+                <Box sx={SM.wrapAddTodo}>
+                    <AddItemForm addItem={addTodolist}/>
+                </Box>
+                <Box sx={SM.wrapTodoLists}>
+                    {todoLists.map(todo => {
+                            return (
+                                <Todolist
+                                    key={todo.id}
+                                    todoId={todo.id}
+                                    title={todo.title}
+                                    date={todo.date}
+                                    tasksFilter={todo.tasksFilter}
+                                    tasks={tasks}
+                                    changeFilter={changeTaskFilter}
+                                    changeChecked={changeTaskStatus}
+                                    changeTitleTodo={changeTitleTodolist}
+                                    changeTaskTitle={changeTaskTitle}
+                                    addTask={addTask}
+                                    removeTask={removeTask}
+                                    removeTodoList={removeTodoList}
+                                />
+                            )
+                        }
                     )
-                }
-            )
-            }
-        </div>
+                    }
+                </Box>
+            </div>
+        </ThemeProvider>
     );
 }
