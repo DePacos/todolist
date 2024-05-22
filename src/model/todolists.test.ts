@@ -1,8 +1,5 @@
 import {
-    AddTodolistAC, ChangeTodolistFilterAC,
-    ChangeTodolistFilterActionType, ChangeTodolistTitleAC, ChangeTodolistTitleActionType, RemoveTodolistAC,
-    RemoveTodolistActionType,
-    todolistReducer
+    AddTodolistAC, ChangeTodolistFilterAC, ChangeTodolistTitleAC, RemoveTodolistAC, todolistReducer
 } from "./todolist-reducer";
 import {TodoListsType} from "../App";
 import {todoDataLists} from "../redux/data"
@@ -20,7 +17,7 @@ test('correct todolist should be add', () => {
 
     const startState: TodoListsType[] = todoDataLists
     const newTodolistTitle = 'NewTodoList'
-    const endState = todolistReducer(startState, AddTodolistAC(todoDataLists[0].id, newTodolistTitle))
+    const endState = todolistReducer(startState, AddTodolistAC(todoDataLists[0].id))
 
     expect(endState.length).toBe(4)
     expect(endState[3].title).toBe(newTodolistTitle)
