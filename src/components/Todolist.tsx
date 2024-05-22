@@ -22,7 +22,7 @@ type TodolistProps = {
     tasks: TasksStateType,
     tasksFilter: string,
     changeFilter: (todoId: string, filter: Filter) => void,
-    changeChecked: (todoId: string, taskId: string) => void,
+    changeChecked: (todoId: string, taskId: string, isDone: boolean) => void,
     changeTaskTitle: (todoId: string, taskId: string, value: string) => void
     changeTitleTodo: (todoId: string, titleValue: string) => void
     addTask: (todoId: string, inputValue: string) => void,
@@ -67,8 +67,8 @@ export const Todolist = (
         changeFilter(todoId, filter)
     }
 
-    const changeCheckedHandler = (taskId: string) => {
-        changeChecked(todoId, taskId)
+    const changeCheckedHandler = (taskId: string, isDone: boolean) => {
+        changeChecked(todoId, taskId, isDone)
     }
 
     const removeTaskHandler = (taskId: string) => {
@@ -99,7 +99,7 @@ export const Todolist = (
                         return (
                             <ListItem key={task.id} sx={SM.getListStyles(task.isDone)}>
                                 <Checkbox
-                                    onChange={() => changeCheckedHandler(task.id)}
+                                    onChange={() => changeCheckedHandler(task.id, task.isDone)}
                                     color={"success"}
                                     checked={task.isDone}
                                     checkedIcon={<DoneOutlineIcon/>}
