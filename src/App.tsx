@@ -9,12 +9,11 @@ import {
     todolistReducer
 } from "./model/todolist-reducer";
 import {
-    AddEmptyTaskAC,
     AddTaskAC,
     ChangeTaskStatusAC,
-    ChangeTaskTitleAC, RemoveTaskAC,
+    ChangeTaskTitleAC,
+    RemoveTaskAC,
     taskReducer,
-    UpdateTasksAC
 } from "./model/task-reducer"
 import {v1} from "uuid";
 import {Todolist} from "./components/Todolist";
@@ -67,22 +66,21 @@ export const App = () => {
 
     const addTodolist = (titleTodolist: string) => {
         let id = v1()
-        dispatchTask(AddEmptyTaskAC(id))
+        dispatchTask(AddTodolistAC(id))
         dispatchTodolist(AddTodolistAC(id, titleTodolist))
     }
 
     const removeTodoList = (todoId: string) => {
+        dispatchTask(RemoveTodolistAC(todoId))
         dispatchTodolist(RemoveTodolistAC(todoId))
-        delete tasks[todoId]
-        dispatchTask(UpdateTasksAC())
     }
 
     const addTask = (todoId: string, inputValue: string) => {
         dispatchTask(AddTaskAC(todoId, inputValue))
     }
 
-    const changeTaskStatus = (todoId: string, taskId: string) => {
-        dispatchTask(ChangeTaskStatusAC(todoId, taskId))
+    const changeTaskStatus = (todoId: string, taskId: string, isDone: boolean) => {
+        dispatchTask(ChangeTaskStatusAC(todoId, taskId, isDone))
     }
 
     const changeTaskFilter = (todoId: string, tasksFilter: Filter) => {
@@ -90,7 +88,7 @@ export const App = () => {
     }
 
     const changeTaskTitle = (todoId: string, taskId: string, value: string) => {
-        dispatchTask(ChangeTaskTitleAC(taskId, taskId, value))
+        dispatchTask(ChangeTaskTitleAC(todoId, taskId, value))
     }
 
     const changeTitleTodolist = (todoId: string, titleValue: string) => {
