@@ -23,7 +23,7 @@ export const EditableSpan = ({title, onChange}: PropsType) => {
         editMode
             ? <TextField
                 id="filled-basic"
-                label="Title Todo"
+                label="Edit title"
                 variant="standard"
                 onChange={handlerOnChange}
                 onBlur={activeMode}

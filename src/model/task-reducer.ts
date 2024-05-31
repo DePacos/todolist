@@ -1,6 +1,6 @@
 import {TasksStateType} from "../App";
 import {AddTodolistActionType, RemoveTodolistActionType,} from "./todolist-reducer";
-import {tasksDataLists, todoDataLists} from "../redux/data";
+import {tasksDataLists} from "../redux/data";
 
 
 
