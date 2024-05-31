@@ -14,19 +14,17 @@ import {SM} from '../styles/material-styles'
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
+import {useDispatch, useSelector} from "react-redux";
+import {AppRootState} from "../redux/store";
+import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../model/task-reducer";
+import {ChangeTodolistFilterAC} from "../model/todolist-reducer";
 
 type TodolistProps = {
     todoId: string,
     title: string,
     date?: string,
-    tasks: TasksStateType,
     tasksFilter: string,
-    changeFilter: (todoId: string, filter: Filter) => void,
-    changeChecked: (todoId: string, taskId: string, isDone: boolean) => void,
-    changeTaskTitle: (todoId: string, taskId: string, value: string) => void
     changeTitleTodo: (todoId: string, titleValue: string) => void
-    addTask: (todoId: string, inputValue: string) => void,
-    removeTask: (todoId: string, taskId: string) => void,
     removeTodoList: (todoId: string) => void,
 }
 
@@ -35,19 +33,35 @@ export const Todolist = (
         todoId,
         title,
         date,
-        tasks,
-        changeFilter,
-        changeTaskTitle,
         changeTitleTodo,
         tasksFilter,
-        changeChecked,
-        addTask,
-        removeTask,
         removeTodoList,
-
     }: TodolistProps) => {
 
-    const changeTasksFilter = (tasks: Array<TasksType>) => {
+    const tasks = useSelector<AppRootState, Array<TasksType>>(state => state.tasks[todoId])
+    const dispatch = useDispatch()
+
+    const addTasksHandler = (inputValue: string) => {
+        dispatch(AddTaskAC(todoId, inputValue))
+    }
+
+    const removeTaskHandler = (taskId: string) => {
+        dispatch(RemoveTaskAC(todoId, taskId))
+    }
+
+    const changeTitleTaskHandler = (titleValue: string, taskId:string) => {
+        dispatch(ChangeTaskTitleAC(todoId, taskId, titleValue))
+    }
+
+    const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
+        dispatch(ChangeTaskStatusAC(todoId, taskId, isDone))
+    }
+
+    const changeFilterHandler = (filter: Filter) => {
+        dispatch(ChangeTodolistFilterAC(todoId, filter))
+    }
+
+    const getTasksFilter = (tasks: Array<TasksType>) => {
         if (tasksFilter === 'active') {
             return tasks.filter(task => !task.isDone)
         }
@@ -55,25 +69,9 @@ export const Todolist = (
         if (tasksFilter === 'completed') {
             return tasks.filter(task => task.isDone)
         }
-
         return tasks
     }
 
-    const addTasksHandler = (inputValue: string) => {
-        addTask(todoId, inputValue)
-    }
-
-    const filterHandler = (filter: Filter) => {
-        changeFilter(todoId, filter)
-    }
-
-    const changeCheckedHandler = (taskId: string, isDone: boolean) => {
-        changeChecked(todoId, taskId, isDone)
-    }
-
-    const removeTaskHandler = (taskId: string) => {
-        removeTask(todoId, taskId)
-    }
     const removeTodoHandler = () => {
         removeTodoList(todoId)
     }
@@ -82,9 +80,6 @@ export const Todolist = (
         changeTitleTodo(todoId, titleValue)
     }
 
-    const changeTitleTaskHandler = (titleValue: string, taskId:string) => {
-        changeTaskTitle(todoId, taskId, titleValue)
-    }
 
     return (
         <Paper elevation={6} sx={SM.wrapTodoList}>
@@ -94,12 +89,12 @@ export const Todolist = (
             </IconButton>
             <AddItemForm addItem={addTasksHandler}/>
             <List>
-                {changeTasksFilter(tasks[todoId]).length !== 0 ?
-                    changeTasksFilter(tasks[todoId]).map(task => {
+                {getTasksFilter(tasks).length !== 0 ?
+                    getTasksFilter(tasks).map(task => {
                         return (
                             <ListItem key={task.id} sx={SM.getListStyles(task.isDone)}>
                                 <Checkbox
-                                    onChange={() => changeCheckedHandler(task.id, task.isDone)}
+                                    onChange={() => changeTaskStatusHandler(task.id, task.isDone)}
                                     color={"success"}
                                     checked={task.isDone}
                                     checkedIcon={<DoneOutlineIcon/>}
@@ -117,9 +112,9 @@ export const Todolist = (
             </List>
             {date ? <div>{date}</div> : null}
             <Box sx={SM.wrapStatusBtn}>
-                <BasicButton variant={(tasksFilter === 'all') ? 'outlined' : 'contained'} color={'success'} title="All" onClick={() => filterHandler('all')}/>
-                <BasicButton variant={(tasksFilter === 'active') ? 'outlined' : 'contained'} color={'success'} title="Active" onClick={() => filterHandler('active')}/>
-                <BasicButton variant={(tasksFilter === 'completed') ? 'outlined' : 'contained'} color={'success'} title="Completed" onClick={() => filterHandler('completed')}/>
+                <BasicButton variant={(tasksFilter === 'all') ? 'outlined' : 'contained'} color={'success'} title="All" onClick={() => changeFilterHandler('all')}/>
+                <BasicButton variant={(tasksFilter === 'active') ? 'outlined' : 'contained'} color={'success'} title="Active" onClick={() => changeFilterHandler('active')}/>
+                <BasicButton variant={(tasksFilter === 'completed') ? 'outlined' : 'contained'} color={'success'} title="Completed" onClick={() => changeFilterHandler('completed')}/>
             </Box>
         </Paper>
     );
