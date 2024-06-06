@@ -40,34 +40,36 @@ export type TasksStateType = {
 export const App = () => {
     const [themeMode, setThemeMode] = React.useState<ThemeMode>('light')
 
-    const changeModeHandler = () => {
+    const changeModeHandler = React.useCallback(() => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
-    }
+    }, [themeMode])
 
-    const theme = createTheme({
-        palette: {
-            mode: themeMode === 'light' ? 'light' : 'dark',
-            primary: {
-                main: '#087EA4',
+    const theme =  React.useMemo(() => {
+        return createTheme({
+            palette: {
+                mode: themeMode === 'light' ? 'light' : 'dark',
+                primary: {
+                    main: '#087EA4',
+                },
             },
-        },
-    })
+        })
+    }, [themeMode])
 
     const todoLists = useSelector<AppRootState, Array<TodoListsType>>(state => state.todolists)
     const dispatch = useDispatch()
 
-    const addTodolist = (titleTodolist: string) => {
+    const addTodolist = React.useCallback((titleTodolist: string) => {
         let id = v1()
         dispatch(AddTodolistAC(id, titleTodolist))
-    }
+    }, [])
 
-    const removeTodoList = (todoId: string) => {
+    const removeTodoList = React.useCallback( (todoId: string) => {
         dispatch(RemoveTodolistAC(todoId))
-    }
+    }, [])
 
-    const changeTitleTodolist = (todoId: string, titleValue: string) => {
+    const changeTitleTodolist = React.useCallback((todoId: string, titleValue: string) => {
         dispatch(ChangeTodolistTitleAC(todoId, titleValue))
-    }
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>
