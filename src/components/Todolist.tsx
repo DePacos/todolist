@@ -1,23 +1,20 @@
 import React from 'react';
 import {BasicButton} from "./Button";
-import {Filter, TasksStateType, TasksType} from "../App";
+import {Filter, TasksType} from "../App";
 import {AddItemForm} from "./AddItemForm";
 import {EditableSpan} from "./EditableSpan";
 
-import DeleteIcon from '@mui/icons-material/Delete';
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from '@mui/icons-material/Cancel';
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import Paper from "@mui/material/Paper";
-import Checkbox from '@mui/material/Checkbox';
 import {SM} from '../styles/material-styles'
 import Box from "@mui/material/Box";
 import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "../redux/store";
 import {AddTaskAC, ChangeTaskStatusAC, ChangeTaskTitleAC, RemoveTaskAC} from "../model/task-reducer";
 import {ChangeTodolistFilterAC} from "../model/todolist-reducer";
+import {Task} from "./Task";
 
 type TodolistProps = {
     todoId: string,
@@ -28,7 +25,7 @@ type TodolistProps = {
     removeTodoList: (todoId: string) => void,
 }
 
-export const Todolist = (
+export const Todolist = React.memo((
     {
         todoId,
         title,
@@ -41,25 +38,26 @@ export const Todolist = (
     const tasks = useSelector<AppRootState, Array<TasksType>>(state => state.tasks[todoId])
     const dispatch = useDispatch()
 
-    const addTasksHandler = (inputValue: string) => {
+    const addTasksHandler = React.useCallback((inputValue: string) => {
         dispatch(AddTaskAC(todoId, inputValue))
-    }
+    }, [])
 
-    const removeTaskHandler = (taskId: string) => {
+    const removeTaskHandler = React.useCallback((taskId: string) => {
         dispatch(RemoveTaskAC(todoId, taskId))
-    }
+    }, [])
 
-    const changeTitleTaskHandler = (titleValue: string, taskId:string) => {
+    const changeTitleTaskHandler = React.useCallback((titleValue: string, taskId:string) => {
         dispatch(ChangeTaskTitleAC(todoId, taskId, titleValue))
-    }
+    },[])
 
-    const changeTaskStatusHandler = (taskId: string, isDone: boolean) => {
+    const changeTaskStatusHandler = React.useCallback((taskId: string, isDone: boolean) => {
         dispatch(ChangeTaskStatusAC(todoId, taskId, isDone))
-    }
+    }, [])
 
-    const changeFilterHandler = (filter: Filter) => {
+    const changeFilterHandler = React.useCallback((filter: Filter) => {
         dispatch(ChangeTodolistFilterAC(todoId, filter))
-    }
+    }, [])
+
 
     const getTasksFilter = (tasks: Array<TasksType>) => {
         if (tasksFilter === 'active') {
@@ -72,14 +70,13 @@ export const Todolist = (
         return tasks
     }
 
+    const handlerChangeTitleTodo = React.useCallback((titleValue: string) =>{
+        changeTitleTodo(todoId, titleValue)
+    }, [])
+
     const removeTodoHandler = () => {
         removeTodoList(todoId)
     }
-
-    const handlerChangeTitleTodo = (titleValue: string) =>{
-        changeTitleTodo(todoId, titleValue)
-    }
-
 
     return (
         <Paper elevation={6} sx={SM.wrapTodoList}>
@@ -92,19 +89,13 @@ export const Todolist = (
                 {getTasksFilter(tasks).length !== 0 ?
                     getTasksFilter(tasks).map(task => {
                         return (
-                            <ListItem key={task.id} sx={SM.getListStyles(task.isDone)}>
-                                <Checkbox
-                                    onChange={() => changeTaskStatusHandler(task.id, task.isDone)}
-                                    color={"success"}
-                                    checked={task.isDone}
-                                    checkedIcon={<DoneOutlineIcon/>}
-                                />
-                                <EditableSpan title={task.title}
-                                              onChange={(titleValue) => changeTitleTaskHandler(titleValue, task.id)}/>
-                                <IconButton onClick={() => removeTaskHandler(task.id)}>
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItem>
+                            <Task
+                                key={task.id}
+                                task={task}
+                                changeTaskStatusHandler={changeTaskStatusHandler}
+                                changeTitleTaskHandler={changeTitleTaskHandler}
+                                removeTaskHandler={removeTaskHandler}
+                            />
                         )
                     })
                     : <span>No Tasks</span>
@@ -118,5 +109,4 @@ export const Todolist = (
             </Box>
         </Paper>
     );
-}
-
+})
