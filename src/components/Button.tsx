@@ -15,8 +15,7 @@ type ButtonProps = {
     color?: ColorType
 }
 
-export const BasicButton = ({title, onClick, disabled, variant, color, type}: ButtonProps) => {
-
+export const BasicButton = React.memo(({title, onClick, disabled, variant, color, type}: ButtonProps) => {
     return (
         <Button
             onClick={onClick}
@@ -27,4 +26,4 @@ export const BasicButton = ({title, onClick, disabled, variant, color, type}: Bu
         >
             {title}</Button>
     );
-};
+});

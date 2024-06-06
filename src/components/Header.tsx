@@ -14,7 +14,8 @@ type HeaderProps = {
     theme: Theme
 }
 
-export const Header = ({changeModeHandler, theme}:HeaderProps) => {
+export const Header = React.memo(( {changeModeHandler, theme}: HeaderProps) => {
+    console.log('header render')
     return (
                 <AppBar sx={SM.wrapHeader} position="fixed" >
                     <Toolbar>
@@ -36,4 +37,4 @@ export const Header = ({changeModeHandler, theme}:HeaderProps) => {
                     </Toolbar>
                 </AppBar>
     );
-}
+})

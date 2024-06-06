@@ -6,7 +6,8 @@ type PropsType = {
     onChange: (titleValue: string) => void
 }
 
-export const EditableSpan = ({title, onChange}: PropsType) => {
+export const EditableSpan = React.memo(({title, onChange}: PropsType) => {
+
     const [editMode, setEditConst] = React.useState(false)
     const [localTitle, setLocalTitle] = React.useState(title)
 
@@ -32,4 +33,4 @@ export const EditableSpan = ({title, onChange}: PropsType) => {
             />
             : <span title="Doubble click for editing" onDoubleClick={activeMode}>{localTitle}</span>
     );
-};
+});

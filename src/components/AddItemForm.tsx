@@ -15,7 +15,7 @@ type PropsType = {
     addItem: (inputValue: string) => void
 }
 
-export const AddItemForm = ({addItem}:PropsType) => {
+export const AddItemForm = React.memo(({addItem}:PropsType) => {
 
     const {
         control,
@@ -71,4 +71,4 @@ export const AddItemForm = ({addItem}:PropsType) => {
             </form>
         </Box>
     )
-}
+})
