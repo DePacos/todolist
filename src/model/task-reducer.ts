@@ -1,6 +1,7 @@
 import {TasksStateType} from "../App";
 import {AddTodolistActionType, RemoveTodolistActionType,} from "./todolist-reducer";
 import {tasksDataLists} from "../redux/data";
+import {v1} from "uuid";
 
 
 
@@ -35,7 +36,7 @@ export const taskReducer = (state: TasksStateType = initialState, action: Action
         case 'ADD_TODOLIST':
             return {...state, [action.payload.id]: []}
         case 'ADD_TASK':
-            return {...state, [action.payload.todoID]: [{id: '', title: action.payload.title, isDone: false}, ...state[action.payload.todoID]]}
+            return {...state, [action.payload.todoID]: [{id: v1(), title: action.payload.title, isDone: false}, ...state[action.payload.todoID]]}
         case 'REMOVE_TODOLIST':
             return (({[action.payload.todoID]: _, ...rest}) => rest)(state)
         case 'REMOVE_TASK':
