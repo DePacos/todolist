@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import {taskAPI} from "../../api/tasksAPI";
-import {ResponseType} from "../../model/todolist-reducer";
-import {GetTasksType, UpdateTaskModelType} from "../../model/task-reducer";
+import {todoListsAPI, ResponseType, GetTasksType, UpdateTaskModelType} from "../../api/todolistsAPI";
 
 export default {
     title: 'API/Tasks',
@@ -16,7 +14,7 @@ export const GetTasks = () => {
     })
 
     const getTasksHandler = () =>{
-        taskAPI.getTasks(taskTitle)
+        todoListsAPI.getTasks(taskTitle)
             .then(res => {
                 setState(res.data)
             })
@@ -46,7 +44,7 @@ export const CreateTask = () => {
     )
 
     const createTaskHandler = () =>{
-        taskAPI.createTask(todoId, taskTitle)
+        todoListsAPI.createTask(todoId, taskTitle)
             .then(res => {
                 setState(res.data)
             })
@@ -77,7 +75,7 @@ export const DeleteTask = () => {
     )
 
     const deleteTaskHandler = () =>{
-        taskAPI.removeTask(todoId, taskId)
+        todoListsAPI.removeTask(todoId, taskId)
             .then(res => {
                 setState(res.data)
             })
@@ -111,10 +109,10 @@ export const UpdateTask = () => {
     )
 
     const updateTaskHandler = () =>{
-        // taskAPI.updateTask(todoId, taskId, updateValue)
-        //     .then(res => {
-        //         setState(res.data)
-        //     })
+        todoListsAPI.updateTask(todoId, taskId, {...state, description: updateValue})
+            .then(res => {
+                setState(res.data)
+            })
     }
 
     return (
