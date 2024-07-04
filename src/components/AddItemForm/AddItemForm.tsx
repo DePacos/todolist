@@ -1,7 +1,7 @@
 import React from "react";
-import {BasicButton} from "./Button";
+import {BasicButton} from "../Button";
 import {Controller, useForm, SubmitHandler} from "react-hook-form";
-import {SM} from "../styles/material-styles";
+import {SM} from "../../styles/material-styles";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
