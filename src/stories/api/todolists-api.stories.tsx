@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
-import {ResponseType, TodoListsType} from "../../model/todolist-reducer";
-import {todoListsAPI} from "../../api/todolistsAPI";
+import {TodoListsType} from "../../store/reducers/todolist-reducer";
+import {todoListsAPI, ResponseType,} from "../../api/todolistsAPI";
 
 export default {
     title: 'API/Todolist',
