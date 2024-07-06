@@ -1,7 +1,5 @@
 import type {Meta, StoryObj} from '@storybook/react';
-import {action} from '@storybook/addon-actions'
 import {Task} from './Task';
-
 
 
 const meta: Meta<typeof Task> = {
@@ -12,9 +10,6 @@ const meta: Meta<typeof Task> = {
     },
     tags: ['autodocs'],
     args: {
-        changeTaskStatusHandler: action('Status changed inside Task'),
-        changeTitleTaskHandler: action('Title changed inside Task'),
-        removeTaskHandler: action('Remove Button clicked changed inside Task'),
         task: {
             id: 'id',
             title: 'title',
