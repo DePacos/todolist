@@ -7,16 +7,8 @@ import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
-type Input = {
-    task: string
-}
-
-type PropsType = {
-    addItem: (inputValue: string) => void
-}
 
 export const AddItemForm = React.memo(({addItem}:PropsType) => {
-
     const {
         control,
         handleSubmit,
@@ -72,3 +64,12 @@ export const AddItemForm = React.memo(({addItem}:PropsType) => {
         </Box>
     )
 })
+
+
+type Input = {
+    task: string
+}
+
+type PropsType = {
+    addItem: (inputValue: string) => void
+}

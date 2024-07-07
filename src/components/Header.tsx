@@ -9,10 +9,6 @@ import {SM} from '../styles/material-styles'
 import Switch from '@mui/material/Switch'
 import {Theme} from "@mui/material";
 
-type HeaderProps = {
-    changeModeHandler: () => void
-    theme: Theme
-}
 
 export const Header = React.memo(( {changeModeHandler, theme}: HeaderProps) => {
     console.log('header render')
@@ -38,3 +34,9 @@ export const Header = React.memo(( {changeModeHandler, theme}: HeaderProps) => {
                 </AppBar>
     );
 })
+
+
+type HeaderProps = {
+    changeModeHandler: () => void
+    theme: Theme
+}
