@@ -1,5 +1,5 @@
 import {
-    addTaskAC,
+    createTaskAC,
     updateTaskAC,
     removeTaskAC, setTasksAC,
     taskReducer
@@ -85,7 +85,7 @@ test('correct task should be added to correct array', () => {
         "addedDate": "2024-06-22T19:33:25.243"
     }
 
-    const endState = taskReducer(startState, addTaskAC(task))
+    const endState = taskReducer(startState, createTaskAC(task))
 
     expect(endState['222'].length).toBe(2)
     expect(endState['222'][0].id).toBe('taskId222')
