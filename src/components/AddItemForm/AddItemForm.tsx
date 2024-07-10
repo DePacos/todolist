@@ -8,7 +8,7 @@ import InputAdornment from "@mui/material/InputAdornment";
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
 
-export const AddItemForm = React.memo(({addItem}:PropsType) => {
+export const AddItemForm = React.memo(({addItem, disable = false}:PropsType) => {
     const {
         control,
         handleSubmit,
@@ -49,11 +49,12 @@ export const AddItemForm = React.memo(({addItem}:PropsType) => {
                                     <PlaylistAddCheckIcon/>
                                 </InputAdornment>)
                         }}
+                        disabled={disable}
                     />}
                     control={control}
                 />
                 <BasicButton
-                    disabled={!!errors.task}
+                    disabled={!!errors.task || disable}
                     title="Add"
                     type={'submit'}
                     color={"success"}
@@ -72,4 +73,5 @@ type Input = {
 
 type PropsType = {
     addItem: (inputValue: string) => void
+    disable?: boolean
 }
