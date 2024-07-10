@@ -16,6 +16,7 @@ beforeEach(() => {
         "addedDate": "2024-06-20T15:04:06.167",
         "order": -4,
         "tasksFilter": "all",
+        'entityStatus': "idle"
     }
 })
 
