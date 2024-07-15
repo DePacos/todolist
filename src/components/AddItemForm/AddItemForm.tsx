@@ -8,41 +8,43 @@ import InputAdornment from "@mui/material/InputAdornment";
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
 
 
-export const AddItemForm = React.memo(({addItem, disable = false}:PropsType) => {
+export const AddItemForm = React.memo(({addItem, inputLabel, disable = false, }:PropsType) => {
     const {
         control,
         handleSubmit,
         formState: {errors}, reset} = useForm<Input>({
-            defaultValues: {
-                task: "",
-            },
-            mode: "onChange"
+        mode: "onChange",
+        defaultValues: {
+            inputName: '',
+        }
     })
 
     const onSubmit: SubmitHandler<Input> = (data) => {
-        addItem(data.task)
+        addItem(data.inputName)
         reset()
     }
 
     return(
-        <Box sx={SM.wrapTaskInput}>
-            <form onSubmit={handleSubmit(onSubmit)}>
+            <Box component="form" sx={SM.itemForm} onSubmit={handleSubmit(onSubmit)}>
                 <Controller
-                    name={'task'}
+                    control={control}
+                    name={'inputName'}
                     rules={{
                         required: true,
                         minLength: 3,
                         maxLength: 20,
                     }}
-                    render={({field: {onChange, value}}) => <TextField
-                        error={!!errors.task}
+                    render={({field: {onChange, value}}) =>
+                        <TextField
+                        error={!!errors.inputName}
                         onChange={onChange}
-                        sx={SM.addTaskInput}
+                        sx={SM.itemInput}
                         value={value || ''}
-                        label="Add task"
+                        label={inputLabel || ''}
                         variant="outlined"
-                        size={"small"}
-                        // helperText={errors.task ? 'Please enter a value between 3 and 20 characters': ''}
+                        size="small"
+                        helperText={errors.inputName ? 'Please enter a value between 3 and 20 characters' : ''}
+                        FormHelperTextProps={{sx:{position:"absolute", bottom: '-25px', width: "max-content"}}}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -51,27 +53,25 @@ export const AddItemForm = React.memo(({addItem, disable = false}:PropsType) => 
                         }}
                         disabled={disable}
                     />}
-                    control={control}
                 />
                 <BasicButton
-                    disabled={!!errors.task || disable}
                     title="Add"
-                    type={'submit'}
-                    color={"success"}
-                    variant={"contained"}
+                    type="submit"
+                    color="success"
+                    variant="contained"
+                    disabled={!!errors.inputName || disable}
                 />
-                {errors.task && <span className='errorMassage'>Please enter a value between 3 and 20 characters</span>}
-            </form>
-        </Box>
+            </Box>
     )
 })
 
 
 type Input = {
-    task: string
+    inputName: string
 }
 
 type PropsType = {
     addItem: (inputValue: string) => void
+    inputLabel?: string
     disable?: boolean
 }
