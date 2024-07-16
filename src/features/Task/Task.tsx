@@ -9,7 +9,7 @@ import {removeTaskTC, TasksType, updateTaskTC} from "../../store/reducers/task-r
 import {useAppDispatch} from "../../store/store";
 
 
-export const Task = React.memo(({task}: TaskProps) => {
+export const Task = React.memo(({task, disable}: TaskProps) => {
     const dispatch = useAppDispatch()
 
     const updateTaskTitleHandler = (title: string) => {
@@ -31,9 +31,10 @@ export const Task = React.memo(({task}: TaskProps) => {
                 color={"success"}
                 checked={!!task.status}
                 checkedIcon={<DoneOutlineIcon/>}
+                disabled={disable}
             />
             <EditableSpan title={task.title} onChange={(taskTitle:string) => updateTaskTitleHandler(taskTitle)}/>
-            <IconButton onClick={removeTaskHandler}>
+            <IconButton onClick={removeTaskHandler} disabled={disable}>
                 <DeleteIcon />
             </IconButton>
         </ListItem>
@@ -43,4 +44,5 @@ export const Task = React.memo(({task}: TaskProps) => {
 
 type TaskProps = {
     task: TasksType
+    disable?: boolean
 }
