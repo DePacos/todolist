@@ -6,7 +6,7 @@ import {AddItemForm} from "../../components/AddItemForm/AddItemForm";
 import List from "@mui/material/List";
 import {Task} from "./Task";
 
-export const TasksList = React.memo(({todoId, tasksFilter}: TasksListProps) => {
+export const TasksList = React.memo(({todoId, tasksFilter, entityStatus}: TasksListProps) => {
     const tasks = useSelector<AppRootState, TasksType[]>(state => state.tasks[todoId])
     const dispatch = useAppDispatch()
 
@@ -27,7 +27,7 @@ export const TasksList = React.memo(({todoId, tasksFilter}: TasksListProps) => {
 
     return (
         <>
-            <AddItemForm addItem={createTasksHandler}/>
+            <AddItemForm addItem={createTasksHandler} inputLabel='Task name' disable={entityStatus === 'loading'}/>
             <List>
                 {getTasksFilter(tasks).length !== 0 ?
                     getTasksFilter(tasks).map(task => {
@@ -35,6 +35,7 @@ export const TasksList = React.memo(({todoId, tasksFilter}: TasksListProps) => {
                             <Task
                                 key={task.id}
                                 task={task}
+                                disable={entityStatus === 'loading'}
                             />
                         )
                     })
@@ -49,4 +50,5 @@ export const TasksList = React.memo(({todoId, tasksFilter}: TasksListProps) => {
 type TasksListProps = {
     todoId: string
     tasksFilter: string
+    entityStatus: string
 }

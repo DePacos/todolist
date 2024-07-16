@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {BasicButton} from "../../components/Button";
-import {taskTC} from "../../store/reducers/task-reducer";
+import {getTaskTC} from "../../store/reducers/task-reducer";
 import {EditableSpan} from "../../components/EditableSpan/EditableSpan";
 import IconButton from "@mui/material/IconButton";
 import CancelIcon from '@mui/icons-material/Cancel';
@@ -23,12 +23,13 @@ export const Todolist = React.memo((
         title,
         date,
         tasksFilter,
+        entityStatus,
     }: TodolistProps) => {
 
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(taskTC(todoId))
+        dispatch(getTaskTC(todoId))
     }, [])
 
     const changeFilterHandler = React.useCallback((filter: Filter) => {
@@ -45,11 +46,11 @@ export const Todolist = React.memo((
 
     return (
         <Paper elevation={6} sx={SM.wrapTodoList}>
-            <h2><EditableSpan title={title} onChange={updateTodolistTitle}/></h2>
-            <IconButton sx={SM.closeTodo} onClick={removeTodoList}>
+            <h2><EditableSpan title={title} onChange={updateTodolistTitle} disable={entityStatus === 'loading'}/></h2>
+            <IconButton sx={SM.closeTodo} onClick={removeTodoList} disabled={entityStatus === 'loading'}>
                 <CancelIcon/>
             </IconButton>
-            <TasksList todoId={todoId} tasksFilter={tasksFilter}/>
+            <TasksList todoId={todoId} tasksFilter={tasksFilter} entityStatus={entityStatus}/>
             {date ? <div>{date}</div> : null}
             <Box sx={SM.wrapStatusBtn}>
                 <BasicButton
@@ -79,4 +80,5 @@ type TodolistProps = {
     date?: string
     order?: number
     tasksFilter: string
+    entityStatus: string
 }
