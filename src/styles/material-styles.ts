@@ -1,9 +1,14 @@
 import {SxProps} from "@mui/material/";
 
-const wrapHeader : SxProps = {
-
+// loading
+const wrapCircularProgress: SxProps = {
+    position: 'fixed',
+    top: '30%',
+    textAlign: 'center',
+    width: '100%'
 }
 
+// todolist
 const wrapTodoLists: SxProps = {
     display: "flex",
     gap: "50px",
@@ -44,27 +49,17 @@ const closeTodo: SxProps = {
     }
 }
 
-const wrapTaskInput: SxProps = {
-    display: 'flex',
-    gap: '10px',
-    alignItems: "center",
-    mb: "15px",
-    'form':{
-        position:"relative",
-        display: 'flex',
-        gap: '15px',
-        flexWrap: "wrap",
-    },
-    '.errorMassage':{
-        color: "red",
-        fontSize: '13px',
-        position: "absolute",
-        left: 0,
-        bottom: '-20px',
-    }
+const wrapAddTodo: SxProps = {
+    mt: '100px',
+    mb: '50px',
 }
 
-const addTaskInput: SxProps = {
+// form
+const itemForm: SxProps = {
+    marginBottom: '10px'
+}
+
+const itemInput: SxProps = {
     'input': {
         p: "5px 10px"
     },
@@ -73,11 +68,7 @@ const addTaskInput: SxProps = {
     }
 }
 
-const wrapAddTodo: SxProps = {
-    mt: '100px',
-    mb: '50px',
-}
-
+// task
 const wrapStatusBtn: SxProps = {
     display: "flex",
     gap: "10px",
@@ -90,15 +81,52 @@ const getListStyles = (isDone: boolean): SxProps => ({
     opacity: isDone ? 0.5 : 1,
 })
 
+// login
+const loginFormContainer: SxProps = {
+    display: "flex",
+    flexDirection: "column",
+    height: "80vh",
+    justifyContent: "center",
+    alignItems: "center",
+}
+
+const loginAvatar: SxProps = {
+    width: 60,
+    height: 60,
+    backgroundColor: 'secondary.main',
+    borderRadius:2,
+    marginBottom: 2
+}
+
+const loginTitle: SxProps = {
+    marginBottom: 2
+}
+
+const loginForm: SxProps = {
+    display: "flex",
+    gap: "26px",
+    flexDirection: "column",
+    width: '100%',
+}
+
+const loginLabelCheckbox: SxProps = {
+    margin: "-10px 0",
+    width: "max-content",
+}
 
 export const SM = {
-    wrapHeader,
+    wrapCircularProgress,
     wrapTodoList,
     closeTodo,
-    addTaskInput,
-    wrapTaskInput,
+    itemInput,
+    itemForm,
     wrapStatusBtn,
     wrapAddTodo,
     wrapTodoLists,
     getListStyles,
+    loginFormContainer,
+    loginAvatar,
+    loginTitle,
+    loginForm,
+    loginLabelCheckbox,
 }
