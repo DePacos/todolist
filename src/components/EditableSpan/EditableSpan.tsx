@@ -1,12 +1,8 @@
 import React from "react";
 import TextField from "@mui/material/TextField";
 
-type PropsType = {
-    title: string
-    onChange: (titleValue: string) => void
-}
 
-export const EditableSpan = React.memo(({title, onChange}: PropsType) => {
+export const EditableSpan = React.memo(({title, onChange, disable}: PropsType) => {
 
     const [editMode, setEditConst] = React.useState(false)
     const [localTitle, setLocalTitle] = React.useState(title)
@@ -30,7 +26,15 @@ export const EditableSpan = React.memo(({title, onChange}: PropsType) => {
                 onBlur={activeMode}
                 value={localTitle}
                 autoFocus
+                disabled={disable}
             />
             : <span title="Doubble click for editing" onDoubleClick={activeMode}>{localTitle}</span>
     );
 });
+
+
+type PropsType = {
+    title: string
+    onChange: (titleValue: string) => void
+    disable?: boolean
+}
