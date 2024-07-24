@@ -9,6 +9,7 @@
     "@mui/icons-material": "^5.15.16",
     "@mui/material": "^5.15.16",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.3",
+    "@reduxjs/toolkit": "^2.2.6",
     "@svgr/webpack": "^5.5.0",
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
@@ -41,6 +42,7 @@
     "fs-extra": "^10.0.0",
     "html-webpack-plugin": "^5.5.0",
     "identity-obj-proxy": "^3.0.0",
+    "immer": "^10.1.1",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "jest-resolve": "^27.4.2",
@@ -124,6 +126,7 @@
     "eslint-plugin-storybook": "^0.8.0",
     "jest-image-snapshot": "^6.4.0",
     "jest-puppeteer": "^10.0.1",
+    "prettier": "3.3.3",
     "puppeteer": "^22.11.0",
     "start-server-and-test": "^2.0.4",
     "storybook": "^8.1.6"
