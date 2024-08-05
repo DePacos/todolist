@@ -43,7 +43,7 @@ export const CreateTask = () => {
   const [state, setState] = useState<ResponseType>({
     resultCode: 111,
     messages: ["test message"],
-    fieldsErrors: ["test error"],
+    fieldsErrors: [{field: 'field', error: 'error',}],
     data: {}
   })
 
@@ -83,7 +83,7 @@ export const DeleteTask = () => {
   const [state, setState] = useState<ResponseType>({
     resultCode: 111,
     messages: ["test message"],
-    fieldsErrors: ["test error"],
+    fieldsErrors: [{field: 'field', error: 'error',}],
     data: {}
   })
 
