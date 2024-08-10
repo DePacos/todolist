@@ -1,6 +1,7 @@
 import React, { useState } from "react"
-import { todoListsAPI, ResponseType, GetTasksType } from "../../api/todolistsAPI"
+import { todoListsAPI, GetTasksType } from "../../api/todolistsAPI"
 import { TasksType } from "../../store/reducers/task-reducer"
+import { BaseResponse } from "common/types/common.types"
 
 export default {
   title: "API/Tasks"
@@ -40,7 +41,7 @@ export const GetTasks = () => {
 export const CreateTask = () => {
   const [todoId, setSetTodoId] = useState("")
   const [taskTitle, setTaskTitle] = useState("")
-  const [state, setState] = useState<ResponseType>({
+  const [state, setState] = useState<BaseResponse>({
     resultCode: 111,
     messages: ["test message"],
     fieldsErrors: [{field: 'field', error: 'error',}],
@@ -80,7 +81,7 @@ export const CreateTask = () => {
 export const DeleteTask = () => {
   const [todoId, setTodoId] = useState("")
   const [taskId, setTaskId] = useState("")
-  const [state, setState] = useState<ResponseType>({
+  const [state, setState] = useState<BaseResponse>({
     resultCode: 111,
     messages: ["test message"],
     fieldsErrors: [{field: 'field', error: 'error',}],
