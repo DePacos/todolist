@@ -1,19 +1,20 @@
-import React, {useEffect} from 'react';
-import './App.css';
-import {Header} from "../components/Header";
-import {createTheme, ThemeProvider} from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import {Outlet} from "react-router-dom";
-import {AppRootState, useAppDispatch} from "../store/store";
-import {meTC} from "../store/reducers/auth-reducer";
-import {CircularProgress} from "@mui/material";
-import {useSelector} from "react-redux";
-import Box from "@mui/material/Box";
-import {SM} from "../styles/material-styles";
+import React, { useEffect } from "react"
+import { useSelector } from "react-redux"
+import { useAppDispatch } from "../store/store"
+import { authActions } from "../store/reducers/auth-reducer"
+import { Outlet } from "react-router-dom"
+import { selectIsInitialized } from "app/appSelectors"
+import { Header } from "../components/Header"
+import "./App.css"
+import { SM } from "../styles/material-styles"
+import Box from "@mui/material/Box"
+import { createTheme, ThemeProvider } from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import { CircularProgress } from "@mui/material"
 
 
 export const App = () => {
-    const isInitialized = useSelector<AppRootState, boolean>(state => state.app.isInitialized)
+    const isInitialized = useSelector(selectIsInitialized)
     const [themeMode, setThemeMode] = React.useState<ThemeMode>('light')
     const changeModeHandler = React.useCallback(() => {
         setThemeMode(themeMode === 'light' ? 'dark' : 'light')
@@ -22,7 +23,7 @@ export const App = () => {
     const dispatch = useAppDispatch()
 
     useEffect(() => {
-        dispatch(meTC())
+        dispatch(authActions.initializeApp())
     }, [])
 
     const theme = React.useMemo(() => {
