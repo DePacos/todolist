@@ -1,4 +1,4 @@
-import { appActions, appReducer, RequestStatusType } from "app/appSlice"
+import { appActions, appSlice, RequestStatusType } from "app/appSlice"
 
 let initialState: {
   isInitialized: boolean
@@ -14,14 +14,14 @@ beforeEach(() => {
   }
 })
 
-test("correct status should be set", () => {
-  const endState = appReducer(initialState, appActions.setStatus({ status: "failed" }))
+test("correct isInitialized should be set", () => {
+  const endState = appSlice(initialState, appActions.setIsInitialized ({ isInitialized: true }))
 
-  expect(endState.status).toBe("failed")
+  expect(endState.isInitialized).toBe(true)
 })
 
 test("correct error message should be set", () => {
-  const endState = appReducer(initialState, appActions.setError({ error: "error" }))
+  const endState = appSlice(initialState, appActions.setError({ error: "error" }))
 
   expect(endState.error).toBe("error")
 })
