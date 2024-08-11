@@ -27,7 +27,7 @@ export const sliceApp = createSlice({
           state.status = "succeeded"
         }
       )
-      .addMatcher(isRejected, (state, action: any) => {
+      .addMatcher(isRejected, (state) => {
           state.status = "failed"
         }
       )
