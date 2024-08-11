@@ -1,22 +1,22 @@
 import React, { useState } from "react"
-import { todoListsAPI, GetTasksType } from "../../api/todolistsAPI"
-import { TasksType } from "../../store/reducers/task-reducer"
-import { BaseResponse } from "common/types/common.types"
+import { Tasks } from "features/Task/taskSlice"
+import { BaseResponse } from "common/types/commonTypes"
+import { tasksAPI, GetTasks } from "features/Task/tasksAPI"
 
 export default {
   title: "API/Tasks"
 }
 
-export const GetTasks = () => {
+export const FetchTasks = () => {
   const [taskTitle, setTaskTitle] = useState("")
-  const [state, setState] = useState<GetTasksType>({
+  const [state, setState] = useState<GetTasks>({
     error: "error",
     totalCount: 0,
     items: []
   })
 
   const getTasksHandler = () => {
-    todoListsAPI.getTasks(taskTitle).then((res) => {
+    tasksAPI.getTasks(taskTitle).then((res) => {
       setState(res.data)
     })
   }
@@ -49,7 +49,7 @@ export const CreateTask = () => {
   })
 
   const createTaskHandler = () => {
-    todoListsAPI.createTask(todoId, taskTitle).then((res) => {
+    tasksAPI.createTask(todoId, taskTitle).then((res) => {
       setState(res.data)
     })
   }
@@ -89,7 +89,7 @@ export const DeleteTask = () => {
   })
 
   const deleteTaskHandler = () => {
-    todoListsAPI.removeTask(todoId, taskId).then((res) => {
+    tasksAPI.removeTask(todoId, taskId).then((res) => {
       setState(res.data)
     })
   }
@@ -122,7 +122,7 @@ export const UpdateTask = () => {
   const [todoId, setTodoId] = useState("")
   const [taskId, setTaskId] = useState("")
   const [updateValue, setUpdateValue] = useState("")
-  const [state, setState] = useState<TasksType>({
+  const [state, setState] = useState<Tasks>({
     id: "111",
     title: "title",
     description: "description",
@@ -145,7 +145,7 @@ export const UpdateTask = () => {
   }
 
   const updateTaskHandler = () => {
-    todoListsAPI
+    tasksAPI
       .updateTask(todoId, taskId, { ...model, description: updateValue })
       .then((res) => {
         setState(res.data.data.item)
