@@ -1,7 +1,7 @@
 import React from "react"
-import { BasicButton } from "../Button"
+import { BasicButton } from "common/components/Buttons/BasicButton"
 import { Controller, useForm, SubmitHandler } from "react-hook-form"
-import { SM } from "../../styles/material-styles"
+import { SM } from "styles/material-styles"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
 import InputAdornment from "@mui/material/InputAdornment"
@@ -12,6 +12,7 @@ export const AddItemForm = React.memo(
     const {
       control,
       handleSubmit,
+      setError,
       formState: { errors },
       reset,
     } = useForm<Input>({
@@ -21,9 +22,17 @@ export const AddItemForm = React.memo(
       },
     })
 
-    const onSubmit: SubmitHandler<Input> = (data) => {
-      addItem(data.inputName)
-      reset()
+    const onSubmit: SubmitHandler<Input> = async (data) => {
+      const res = await addItem(data.inputName)
+      if (res.payload.error.resultCode === 1) {
+        const errorMessage = res.payload.error.messages[0]
+          setError("inputName", {
+            type: "manual",
+            message: errorMessage
+          })
+      } else {
+        reset()
+      }
     }
 
     return (
@@ -32,9 +41,15 @@ export const AddItemForm = React.memo(
           control={control}
           name={"inputName"}
           rules={{
-            required: true,
-            minLength: 3,
-            maxLength: 20,
+            required: 'Please enter a value',
+            minLength: {
+              value: 3,
+              message: "Minimum value 3 letters",
+            },
+            maxLength: {
+              value: 20,
+              message: "Maximum 20 letters",
+            }
           }}
           render={({ field: { onChange, value } }) => (
             <TextField
@@ -45,9 +60,7 @@ export const AddItemForm = React.memo(
               label={inputLabel || ""}
               variant="outlined"
               size="small"
-              helperText={
-                errors.inputName ? "Please enter a value between 3 and 20 characters" : ""
-              }
+              helperText={errors.inputName ? errors.inputName.message : ""}
               FormHelperTextProps={{
                 sx: { position: "absolute", bottom: "-25px", width: "max-content" },
               }}
@@ -79,7 +92,7 @@ type Input = {
 }
 
 type PropsType = {
-  addItem: (inputValue: string) => void
+  addItem: (inputValue: string) => Promise<any>
   inputLabel?: string
   disable?: boolean
 }
