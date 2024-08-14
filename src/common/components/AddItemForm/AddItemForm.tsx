@@ -7,8 +7,8 @@ import Box from "@mui/material/Box"
 import InputAdornment from "@mui/material/InputAdornment"
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck"
 
-export const AddItemForm = React.memo(
-  ({ addItem, inputLabel, disable = false }: PropsType) => {
+export const AddItemForm =
+  ({ addItem, inputLabel, disable = false }: Props) => {
     const {
       control,
       handleSubmit,
@@ -84,14 +84,13 @@ export const AddItemForm = React.memo(
         />
       </Box>
     )
-  },
-)
+  }
 
 type Input = {
   inputName: string
 }
 
-type PropsType = {
+type Props = {
   addItem: (inputValue: string) => Promise<any>
   inputLabel?: string
   disable?: boolean
