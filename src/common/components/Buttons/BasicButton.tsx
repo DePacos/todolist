@@ -1,7 +1,7 @@
 import React from 'react';
 import Button from "@mui/material/Button";
 
-export const BasicButton = ({title, onClick, disabled, variant, color, type}: ButtonProps) => {
+export const BasicButton = ({title, onClick, disabled, variant, color, type}: Props) => {
     return (
         <Button
             onClick={onClick}
@@ -18,7 +18,7 @@ type BasicButton = "submit" | "button" | undefined
 type Color = "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined
 type Variant = "text" | "outlined" | "contained" | undefined
 
-type ButtonProps = {
+type Props = {
     title: string
     type?: BasicButton
     onClick?: () => void
