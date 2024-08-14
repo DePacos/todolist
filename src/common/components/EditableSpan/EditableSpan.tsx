@@ -1,7 +1,7 @@
 import React from "react"
 import TextField from "@mui/material/TextField"
 
-export const EditableSpan = React.memo(({ title, onChange, disable }: PropsType) => {
+export const EditableSpan = ({ title, onChange, disable }: Props) => {
   const [editMode, setEditConst] = React.useState(false)
   const [localTitle, setLocalTitle] = React.useState(title)
 
@@ -30,9 +30,9 @@ export const EditableSpan = React.memo(({ title, onChange, disable }: PropsType)
       {localTitle}
     </span>
   )
-})
+}
 
-type PropsType = {
+type Props = {
   title: string
   onChange: (titleValue: string) => void
   disable?: boolean
