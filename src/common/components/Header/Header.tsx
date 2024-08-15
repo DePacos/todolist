@@ -10,10 +10,10 @@ import { useSelector } from "react-redux"
 import { useAppDispatch } from "common/hooks"
 import { ErrorSnackbar } from "common/components/ErrorSnackbar/ErrorSnackbar"
 import { Link } from "react-router-dom"
-import { authActions } from "features/auth/authSlice"
+import { authActions } from "features/auth/model/authSlice"
 import { selectAppStatus } from "app/appSelectors"
-import { selectAuthIsLoggedIn } from "features/auth/authSelectors"
-import ThemeToggleButton from "theme/ThemeToggleButton"
+import { selectAuthIsLoggedIn } from "features/auth/model/authSelectors"
+import ThemeToggleButton from "app/styles/theme/ThemeToggleButton"
 
 export const Header = () => {
   const status = useSelector(selectAppStatus)
