@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { authActions } from "features/auth/authSlice"
+import { authActions } from "features/auth/model/authSlice"
 import { Outlet } from "react-router-dom"
 import { Header } from "common/components/Header/Header"
 import "./App.css"
-import { SM } from "styles/material-styles"
+import { SM } from "app/styles/material-styles"
 import Box from "@mui/material/Box"
 import { CircularProgress, CssBaseline } from "@mui/material"
 import { useAppDispatch } from "common/hooks"
 import { selectIsInitialized } from "app/appSelectors"
-import { ThemeProvider } from "theme/ThemeContext"
+import { ThemeProvider } from "app/styles/theme/ThemeContext"
 
 export const App = () => {
     const isInitialized = useSelector(selectIsInitialized)
