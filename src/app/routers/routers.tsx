@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBrowserRouter, Navigate} from "react-router-dom";
-import {App} from '../app/App';
-import {Login} from '../features/Login/Login'
-import {TodoListsList} from '../features/Todolists/TodoListsList'
-import {ErrorPage} from "../components/ErrorPage/ErrorPage";
+import {App} from 'app/App';
+import {Login} from 'features/auth/ui/Login'
+import {TodoListsList} from 'features/Todolists/ui/TodoListsList'
+import {ErrorPage} from "common/components/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
     {
