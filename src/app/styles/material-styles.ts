@@ -1,4 +1,5 @@
 import {SxProps} from "@mui/material/";
+import { TaskStatuses } from "common/enums"
 
 // loading
 const wrapCircularProgress: SxProps = {
@@ -76,9 +77,9 @@ const wrapStatusBtn: SxProps = {
     flexWrap: "wrap",
 }
 
-const getListStyles = (isDone: boolean): SxProps => ({
+const taskItem = (status: TaskStatuses): SxProps => ({
     p: 0,
-    opacity: isDone ? 0.5 : 1,
+    opacity: status === TaskStatuses.Completed ? 0.5 : 1,
 })
 
 // login
@@ -123,7 +124,7 @@ export const SM = {
     wrapStatusBtn,
     wrapAddTodo,
     wrapTodoLists,
-    getListStyles,
+    taskItem,
     loginFormContainer,
     loginAvatar,
     loginTitle,
