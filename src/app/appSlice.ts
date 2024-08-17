@@ -1,6 +1,9 @@
 import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit"
 import { RejectActionError } from "common/types"
 import axios from "axios"
+import { todolistActions } from "features/Todolists/model/todolistSlice"
+import { authActions } from "features/auth/model/authSlice"
+import { tasksThunks } from "features/Task/model/taskSlice"
 
 export const sliceApp = createSlice({
   name: "app",
@@ -41,6 +44,11 @@ export const sliceApp = createSlice({
           switch (action.payload.type) {
             case "appError": {
               const error = action.payload.error
+
+              if(action.type === todolistActions.createTodolist.rejected.type) return
+              if(action.type === tasksThunks.addTask.rejected.type) return
+              if(action.type === authActions.initializeApp.rejected.type) return
+
               state.error = error.messages.length ? error.messages[0] : defaultMessage
               break
             }
@@ -63,7 +71,7 @@ export const sliceApp = createSlice({
         },
       )
       .addDefaultCase((state, action) => {
-        console.log(action)
+        // console.log(action)
       })
   }
 })
