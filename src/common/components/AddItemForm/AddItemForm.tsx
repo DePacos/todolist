@@ -1,7 +1,7 @@
 import React from "react"
 import { BasicButton } from "common/components/Buttons/BasicButton"
-import { Controller, useForm, SubmitHandler } from "react-hook-form"
-import { SM } from "styles/material-styles"
+import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import { SM } from "app/styles/material-styles"
 import TextField from "@mui/material/TextField"
 import Box from "@mui/material/Box"
 import InputAdornment from "@mui/material/InputAdornment"
@@ -24,13 +24,12 @@ export const AddItemForm =
 
     const onSubmit: SubmitHandler<Input> = async (data) => {
       const res = await addItem(data.inputName)
-      if (res.payload.error.resultCode === 1) {
-        const errorMessage = res.payload.error.messages[0]
-          setError("inputName", {
-            type: "manual",
-            message: errorMessage
-          })
-      } else {
+      if (res.payload.error) {
+        setError("inputName", {
+          type: "manual",
+          message: res.payload.error.messages[0]
+        })
+      }else{
         reset()
       }
     }
@@ -47,7 +46,7 @@ export const AddItemForm =
               message: "Minimum value 3 letters",
             },
             maxLength: {
-              value: 20,
+              value: 102,
               message: "Maximum 20 letters",
             }
           }}
