@@ -45,9 +45,10 @@ export const sliceApp = createSlice({
             case "appError": {
               const error = action.payload.error
 
-              if(action.type === todolistActions.createTodolist.rejected.type) return
-              if(action.type === tasksThunks.addTask.rejected.type) return
-              if(action.type === authActions.initializeApp.rejected.type) return
+              if(
+                action.type === todolistActions.createTodolist.rejected.type ||
+                action.type === tasksThunks.addTask.rejected.type ||
+                action.type === authActions.initializeApp.rejected.type) return
 
               state.error = error.messages.length ? error.messages[0] : defaultMessage
               break
