@@ -1,5 +1,5 @@
 import { RequestStatusType } from "app/appSlice"
-import { asyncThunkCreator, buildCreateSlice, PayloadAction } from "@reduxjs/toolkit"
+import { asyncThunkCreator, buildCreateSlice, isFulfilled, isRejected, PayloadAction } from "@reduxjs/toolkit"
 import { tasksAPI } from "features/Todolists/api/todolistAPI"
 import { ResultCode } from "common/enums"
 import { RejectAppError, RejectCatchError } from "common/types"
@@ -35,7 +35,7 @@ export const sliceTodolist = createTodolistSlice({
         }
       }),
 
-      removeTodolist: creators.asyncThunk(async (todoId: string, { rejectWithValue }) => {
+      removeTodolist: creators.asyncThunk(async (todoId: string, {dispatch, rejectWithValue }) => {
         try {
           const res = await tasksAPI.removeTodolist(todoId)
           if (res.data.resultCode === ResultCode.Success) {
@@ -94,6 +94,7 @@ export const sliceTodolist = createTodolistSlice({
         entityStatus: RequestStatusType
       }>) => {
         const index = state.findIndex((todo) => todo.id === action.payload.todoId)
+        console.log('changeTodolistStatus', index)
         if (index !== -1) state[index].entityStatus = action.payload.entityStatus
       }),
 
@@ -103,6 +104,17 @@ export const sliceTodolist = createTodolistSlice({
       })
 
     }
+  },
+  extraReducers: builder => {
+    builder
+      .addMatcher(isRejected(todolistActions.removeTodolist), (state, action) => {
+      const todoList = state.find((todo) =>
+        todo.id === action.meta.arg
+      )
+        if(todoList){
+          todoList.entityStatus = "loading"
+      }
+    })
   }
 })
 
