@@ -1,5 +1,5 @@
 import { RequestStatusType } from "app/appSlice"
-import { asyncThunkCreator, buildCreateSlice, isFulfilled, isRejected, PayloadAction } from "@reduxjs/toolkit"
+import { asyncThunkCreator, buildCreateSlice, isRejected, PayloadAction } from "@reduxjs/toolkit"
 import { tasksAPI } from "features/Todolists/api/todolistAPI"
 import { ResultCode } from "common/enums"
 import { RejectAppError, RejectCatchError } from "common/types"
@@ -35,7 +35,7 @@ export const sliceTodolist = createTodolistSlice({
         }
       }),
 
-      removeTodolist: creators.asyncThunk(async (todoId: string, {dispatch, rejectWithValue }) => {
+      removeTodolist: creators.asyncThunk(async (todoId: string, {rejectWithValue }) => {
         try {
           const res = await tasksAPI.removeTodolist(todoId)
           if (res.data.resultCode === ResultCode.Success) {
