@@ -1,8 +1,18 @@
-import { TasksState, taskSlice, tasksThunks } from "features/Task/taskSlice"
-import { todolistActions, TodoLists } from "features/Todolists/todolistSlice"
+import {
+  TasksState,
+  taskSlice,
+  updateTask,
+  removeTask,
+  addTask,
+  fetchTasks,
+} from "features/Task/model/taskSlice"
+import {
+  todolistActions,
+  TodoLists,
+} from "features/Todolists/model/todolistSlice"
 
 let startState: TasksState
-let todoLists : TodoLists[]
+let todoLists: TodoLists[]
 let testTitle: string
 let todoId1: string
 let todoId2: string
@@ -53,17 +63,19 @@ beforeEach(() => {
     },
   ]
   testTitle = "Test Title"
-  todoId1 = '111'
-  todoId2 = '222'
+  todoId1 = "111"
+  todoId2 = "222"
 })
 
 test("correct task should be deleted from correct array", () => {
+  type ActionTypeForTest<T extends (...args: any) => any> = Omit<
+    ReturnType<T>,
+    "meta"
+  >
 
-  type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
-
-  const action: ActionTypeForTest<typeof tasksThunks.removeTask.fulfilled> = {
-    type: tasksThunks.removeTask.fulfilled.type,
-    payload: {todoId: todoId1, taskId: "taskId111" },
+  const action: ActionTypeForTest<typeof removeTask.fulfilled> = {
+    type: removeTask.fulfilled.type,
+    payload: { todoId: todoId1, taskId: "taskId111" },
   }
 
   const endState = taskSlice(startState, action)
@@ -85,10 +97,13 @@ test("correct task should be added to correct array", () => {
     addedDate: "2024-06-22T19:33:25.243",
   }
 
-  type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
+  type ActionTypeForTest<T extends (...args: any) => any> = Omit<
+    ReturnType<T>,
+    "meta"
+  >
 
-  const action: ActionTypeForTest<typeof tasksThunks.createTask.fulfilled> = {
-    type: tasksThunks.createTask.fulfilled.type,
+  const action: ActionTypeForTest<typeof addTask.fulfilled> = {
+    type: addTask.fulfilled.type,
     payload: { task },
   }
 
@@ -101,11 +116,18 @@ test("correct task should be added to correct array", () => {
 })
 
 test("status of specified task should be changed", () => {
-  type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
+  type ActionTypeForTest<T extends (...args: any) => any> = Omit<
+    ReturnType<T>,
+    "meta"
+  >
 
-  const action: ActionTypeForTest<typeof tasksThunks.updateTask.fulfilled> = {
-    type: tasksThunks.updateTask.fulfilled.type,
-    payload: { todoId: todoId1, taskId: "taskId111", domainModel: { status: 444 } },
+  const action: ActionTypeForTest<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      todoId: todoId1,
+      taskId: "taskId111",
+      domainModel: { status: 444 },
+    },
   }
 
   const endState = taskSlice(startState, action)
@@ -114,11 +136,18 @@ test("status of specified task should be changed", () => {
   expect(endState[todoId2][0].status).toBe(0)
 })
 test("correct change task title", () => {
-  type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
+  type ActionTypeForTest<T extends (...args: any) => any> = Omit<
+    ReturnType<T>,
+    "meta"
+  >
 
-  const action: ActionTypeForTest<typeof tasksThunks.updateTask.fulfilled> = {
-    type: tasksThunks.updateTask.fulfilled.type,
-    payload: { todoId: todoId1, taskId: "taskId111", domainModel: { title: testTitle } },
+  const action: ActionTypeForTest<typeof updateTask.fulfilled> = {
+    type: updateTask.fulfilled.type,
+    payload: {
+      todoId: todoId1,
+      taskId: "taskId111",
+      domainModel: { title: testTitle },
+    },
   }
 
   const endState = taskSlice(startState, action)
@@ -135,10 +164,13 @@ test("new array should be added when new todolist is added", () => {
     order: -1,
   }
 
-  const endState = taskSlice(startState, todolistActions.createTodolist.fulfilled({ todolist }, '', testTitle))
+  const endState = taskSlice(
+    startState,
+    todolistActions.createTodolist.fulfilled({ todolist }, "", testTitle),
+  )
 
   const keys = Object.keys(endState)
-  const newKey = keys.find((k) => k != todoId1 && k != todoId2 )
+  const newKey = keys.find((k) => k != todoId1 && k != todoId2)
   if (!newKey) {
     throw Error("new key should be added")
   }
@@ -148,8 +180,10 @@ test("new array should be added when new todolist is added", () => {
 })
 
 test("if todolist is deleted are deleted and the tasks", () => {
-  const endState = taskSlice(startState,
-    todolistActions.removeTodolist.fulfilled({todoId: todoId1}, '', ''))
+  const endState = taskSlice(
+    startState,
+    todolistActions.removeTodolist.fulfilled({ todoId: todoId1 }, "", ""),
+  )
 
   expect(endState[todoId1]).toBe(undefined)
 })
@@ -167,10 +201,13 @@ test("tasks should be added for todolist", () => {
   //   payload: { todoId: "111", tasks: startState["111"] },
   // }
 
-  type ActionTypeForTest<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">
+  type ActionTypeForTest<T extends (...args: any) => any> = Omit<
+    ReturnType<T>,
+    "meta"
+  >
 
-  const action: ActionTypeForTest<typeof tasksThunks.fetchTasks.fulfilled> = {
-    type: tasksThunks.fetchTasks.fulfilled.type,
+  const action: ActionTypeForTest<typeof fetchTasks.fulfilled> = {
+    type: fetchTasks.fulfilled.type,
     payload: { todoId: todoId1, tasks: startState[todoId1] },
   }
 
