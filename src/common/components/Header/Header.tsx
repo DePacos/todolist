@@ -35,19 +35,15 @@ export const Header = () => {
         </Typography>
         <MenuButton color="inherit">Faq</MenuButton>
         {isLoggedIn ? (
-          <MenuButton
-            onClick={handleLogout}
-            color="inherit"
-          >
+          <MenuButton onClick={handleLogout} color="inherit">
             Logout
           </MenuButton>
         ) : (
-          <MenuButton
-            color="inherit">
+          <MenuButton color="inherit">
             <Link to="/login">Login</Link>
           </MenuButton>
         )}
-        <ThemeToggleButton/>
+        <ThemeToggleButton />
       </Toolbar>
       {status === "loading" && <LinearProgress />}
     </AppBar>
