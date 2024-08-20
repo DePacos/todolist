@@ -157,7 +157,7 @@ export const sliceTodolist = createTodolistSlice({
         },
       ),
 
-      clearingTodolistWhenLogout: creators.reducer((state, action) => {
+      clearingTodolistWhenLogout: creators.reducer(() => {
         return []
       }),
     }
