@@ -1,18 +1,18 @@
 import React from "react"
 import { Provider } from "react-redux"
 import { combineReducers } from "redux"
-import { taskReducer } from "../../store/reducers/task-reducer"
-import { todolistReducer } from "../../store/reducers/todolist-reducer"
-import { appReducer, RequestStatusType } from "../../app/appSlice"
-import { authReducer } from "../../store/reducers/auth-reducer"
+import { taskSlice } from "features/Task/model/taskSlice"
+import { todolistSlice } from "features/Todolists/model/todolistSlice"
+import { appSlice, RequestStatusType } from "../../app/appSlice"
+import { authSlice } from "features/auth/model/authSlice"
 import { configureStore } from "@reduxjs/toolkit"
 import { thunk } from "redux-thunk"
 
 const rootReducer = combineReducers({
-  todolists: todolistReducer,
-  tasks: taskReducer,
-  app: appReducer,
-  auth: authReducer,
+  todolists: todolistSlice,
+  tasks: taskSlice,
+  app: appSlice,
+  auth: authSlice,
 })
 
 const initialStoryState = {
