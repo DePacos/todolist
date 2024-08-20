@@ -1,9 +1,15 @@
-import { createSlice, isFulfilled, isPending, isRejected, PayloadAction } from "@reduxjs/toolkit"
+import {
+  createSlice,
+  isFulfilled,
+  isPending,
+  isRejected,
+  PayloadAction,
+} from "@reduxjs/toolkit"
 import { RejectActionError } from "common/types"
 import axios from "axios"
 import { todolistActions } from "features/Todolists/model/todolistSlice"
 import { authActions } from "features/auth/model/authSlice"
-import { tasksThunks } from "features/Task/model/taskSlice"
+import { addTask } from "features/Task/model/taskSlice"
 
 export const sliceApp = createSlice({
   name: "app",
@@ -20,20 +26,17 @@ export const sliceApp = createSlice({
       state.isInitialized = action.payload.isInitialized
     },
   },
-  extraReducers: builder => {
+  extraReducers: (builder) => {
     builder
       .addMatcher(isPending, (state) => {
-          state.status = "loading"
-        }
-      )
+        state.status = "loading"
+      })
       .addMatcher(isFulfilled, (state) => {
-          state.status = "succeeded"
-        }
-      )
+        state.status = "succeeded"
+      })
       .addMatcher(isRejected, (state) => {
-          state.status = "failed"
-        }
-      )
+        state.status = "failed"
+      })
       .addMatcher(
         (action): action is PayloadAction<RejectActionError> => {
           return isRejected(action) && action.payload
@@ -45,19 +48,26 @@ export const sliceApp = createSlice({
             case "appError": {
               const error = action.payload.error
 
-              if(
+              if (
                 action.type === todolistActions.createTodolist.rejected.type ||
-                action.type === tasksThunks.addTask.rejected.type ||
-                action.type === authActions.initializeApp.rejected.type) return
+                action.type === addTask.rejected.type ||
+                action.type === authActions.initializeApp.rejected.type
+              )
+                return
 
-              state.error = error.messages.length ? error.messages[0] : defaultMessage
+              state.error = error.messages.length
+                ? error.messages[0]
+                : defaultMessage
               break
             }
 
             case "catchError": {
               const error = action.payload.error
               if (axios.isAxiosError(error)) {
-                state.error = error.response?.data?.message || error?.message || defaultMessage
+                state.error =
+                  error.response?.data?.message ||
+                  error?.message ||
+                  defaultMessage
               } else if (error instanceof Error) {
                 state.error = `Native error: ${error.message}`
               } else {
@@ -74,7 +84,7 @@ export const sliceApp = createSlice({
       .addDefaultCase((state, action) => {
         // console.log(action)
       })
-  }
+  },
 })
 
 export const appSlice = sliceApp.reducer
