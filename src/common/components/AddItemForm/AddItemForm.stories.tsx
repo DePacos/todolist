@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react"
-import { AddItemForm } from "./AddItemForm"
+import { AddItemForm } from "common/components/AddItemForm/AddItemForm"
 import { action } from "@storybook/addon-actions"
 
 const meta = {
@@ -11,7 +11,7 @@ const meta = {
   tags: ["autodocs"],
   argTypes: {
     addItem: {
-      description: "Button clicked inside form",
+      description: "BasicButton clicked inside form",
       action: "clicked",
     },
     inputLabel: {
@@ -24,14 +24,11 @@ const meta = {
 }
 
 export const AddItemFormStory: Story = {
-  args: {
-    addItem: action("Button clicked inside form"),
-  },
+  args: {},
 }
 
 export const AddItemFormDisableStory: Story = {
   args: {
-    addItem: action("Button clicked inside form"),
     disable: true,
   },
 }
