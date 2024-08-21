@@ -1,8 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react"
 import React from "react"
-import { App } from "./App"
-import { ReduxStoreProviderDecorator } from "../stories/decorators/ReduxStoreProviderDecorator"
-import { TodoListsList } from "../features/Todolists/TodoListsList"
+import { ReduxStoreProviderDecorator } from "stories/decorators/ReduxStoreProviderDecorator"
+import { TodoListsList } from "features/Todolists/ui/TodoListsList"
 
 const meta: Meta<typeof TodoListsList> = {
   title: "TODOLIST/App",
@@ -15,9 +14,9 @@ export default meta
 type Story = StoryObj<typeof TodoListsList>
 
 export const AppBaseExample = () => {
-  return(
+  return (
     <>
-      <TodoListsList/>
+      <TodoListsList />
     </>
   )
 }
