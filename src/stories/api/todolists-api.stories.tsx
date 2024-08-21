@@ -1,20 +1,21 @@
 import React, {useEffect, useState} from 'react'
-import {TodoListsType} from "../../store/reducers/todolist-reducer";
-import {todoListsAPI, ResponseType,} from "../../api/todolistsAPI";
+import {TodoLists} from "features/Todolists/model/todolistSlice"
+import { BaseResponse } from "common/types/types"
+import { tasksAPI } from "features/Todolists/api/todolistAPI"
 
 export default {
     title: 'API/Todolist',
 }
 
 export const GetTodoLists = () => {
-    const [state, setState] = useState<TodoListsType[]>([{
+    const [state, setState] = useState<TodoLists[]>([{
         id: '111',
         addedDate: '2020',
         title: 'test title',
         order: 111
     }])
     useEffect(() => {
-        todoListsAPI.getTodolist()
+        tasksAPI.getTodolist()
             .then(res => {
                 setState(res.data)
             })
@@ -24,7 +25,7 @@ export const GetTodoLists = () => {
 
 export const CreateTodoList = () => {
     const [todoTitle, setTodoTitle] = useState('')
-    const [state, setState] = useState<ResponseType>(
+    const [state, setState] = useState<BaseResponse>(
         {
             resultCode: 111,
             messages: ['test message'],
@@ -34,7 +35,7 @@ export const CreateTodoList = () => {
     )
 
     const createTodoListHandler = () =>{
-        todoListsAPI.createTodolist(todoTitle)
+        tasksAPI.createTodolist(todoTitle)
             .then(res => {
                 setState(res.data)
             })
@@ -53,7 +54,7 @@ export const CreateTodoList = () => {
 
 export const DeleteTodoList = () => {
     const [todoId, setTodoId] = useState('')
-    const [state, setState] = useState<ResponseType>(
+    const [state, setState] = useState<BaseResponse>(
         {
             resultCode: 111,
             messages: ['test message'],
@@ -63,7 +64,7 @@ export const DeleteTodoList = () => {
     )
 
     const deleteTodoListHandler = () =>{
-        todoListsAPI.removeTodolist(todoId)
+        tasksAPI.removeTodolist(todoId)
             .then(res => {
                 setState(res.data)
             })
@@ -84,7 +85,7 @@ export const DeleteTodoList = () => {
 export const UpdateTodoList = () => {
     const [todoId, setTodoId] = useState('')
     const [updateValue, setUpdateValue] = useState('')
-    const [state, setState] = useState<ResponseType>(
+    const [state, setState] = useState<BaseResponse>(
         {
             resultCode: 111,
             messages: ['test message'],
@@ -94,7 +95,7 @@ export const UpdateTodoList = () => {
     )
 
     const updateTodoListHandler = () =>{
-        todoListsAPI.updateTodolist(todoId, updateValue)
+        tasksAPI.updateTodolist(todoId, updateValue)
             .then(res => {
                 setState(res.data)
             })
