@@ -1,7 +1,7 @@
 import React, { useState } from "react"
-import { Tasks } from "features/Task/taskSlice"
-import { BaseResponse } from "common/types/commonTypes"
-import { tasksAPI, GetTasks } from "features/Task/tasksAPI"
+import { Tasks } from "features/Task/model/taskSlice"
+import { BaseResponse } from "common/types/types"
+import { tasksAPI, GetTasks } from "features/Task/api/tasksAPI"
 
 export default {
   title: "API/Tasks"
