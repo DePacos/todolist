@@ -6,35 +6,46 @@ import { SM } from "app/styles/material-styles"
 import { EditableSpan } from "common/components"
 import IconButton from "@mui/material/IconButton"
 import DeleteIcon from "@mui/icons-material/Delete"
-import { removeTask, Tasks, updateTask, } from "features/Task/model/taskSlice"
+import { removeTask, Tasks, updateTask } from "features/Task/model/taskSlice"
 import { useAppDispatch } from "common/hooks"
 import { TaskStatuses } from "common/enums"
 
 export const Task = ({ task, disable }: Props) => {
-
   const dispatch = useAppDispatch()
 
-  const updateTaskTitleHandler = (title: string) => {
+  const updateTaskHandler = (
+    taskProperty: TaskProperty,
+    taskValue: string | number,
+  ) => {
     dispatch(
-      updateTask({ todoId: task.todoListId, taskId: task.id, domainModel: { title } }),
-    )
-  }
-
-  const updateTaskStatusHandler = (status: number) => {
-    dispatch(
-      updateTask({ todoId: task.todoListId, taskId: task.id, domainModel: { status } }),
+      updateTask({
+        todoId: task.todoListId,
+        taskId: task.id,
+        domainModel:
+          taskProperty === "title"
+            ? { title: taskValue as string }
+            : taskProperty === "status"
+              ? { status: taskValue as number }
+              : {},
+      }),
     )
   }
 
   const removeTaskHandler = () => {
-    dispatch(removeTask({todoId: task.todoListId, taskId: task.id }))
+    dispatch(removeTask({ todoId: task.todoListId, taskId: task.id }))
   }
 
   return (
     <ListItem key={task.id} className="test" sx={SM.taskItem(task.status)}>
       <Checkbox
-        onChange={() => updateTaskStatusHandler(
-          task.status === TaskStatuses.New ? TaskStatuses.Completed : TaskStatuses.New)}
+        onChange={() =>
+          updateTaskHandler(
+            "status",
+            task.status === TaskStatuses.New
+              ? TaskStatuses.Completed
+              : TaskStatuses.New,
+          )
+        }
         color={"success"}
         checked={!!task.status}
         checkedIcon={<DoneOutlineIcon />}
@@ -42,7 +53,7 @@ export const Task = ({ task, disable }: Props) => {
       />
       <EditableSpan
         title={task.title}
-        onChange={(taskTitle: string) => updateTaskTitleHandler(taskTitle)}
+        onChange={(taskTitle: string) => updateTaskHandler("title", taskTitle)}
       />
       <IconButton onClick={removeTaskHandler} disabled={disable}>
         <DeleteIcon />
@@ -55,3 +66,11 @@ type Props = {
   task: Tasks
   disable?: boolean
 }
+
+type TaskProperty =
+  | "title"
+  | "description"
+  | "status"
+  | "priority"
+  | "startsDate"
+  | "deadLine"
