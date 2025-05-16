@@ -1,3 +1,3 @@
-import { ThemeProvider } from './theme/ThemeProvider';
+import { StoreProvider } from '@/providers/store/StoreProvider.tsx';
 
-export const providers = [ThemeProvider];
+export const providers = [StoreProvider];
