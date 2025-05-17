@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
 
-import { todolistApi } from '@/api/todolistApi.ts';
-import { appSlice } from '@/store/appSlice.ts';
+import { todolistApi } from '@/app/api/todolistApi.ts';
+import { appSlice } from '@/app/reducer/appSlice.ts';
 
 export const store = configureStore({
   reducer: {
