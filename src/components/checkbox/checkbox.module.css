@@ -1,0 +1,44 @@
+.wrapper {
+    position: relative;
+
+    label{
+        cursor: pointer;
+        color: var(--font-color);
+    }
+
+    input {
+        display: none;
+        cursor: pointer;
+    }
+
+    input ~ label {
+        position: relative;
+        padding-left: 25px;
+        user-select: none;
+    }
+
+    input ~ label::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        left: 0;
+        width: 18px;
+        height: 18px;
+        border: 1px solid currentColor;
+        border-radius: 5px;
+    }
+
+    input:checked ~ label::after {
+        content: '';
+        background: url("@/assets/icons/check.svg") center #d3cefa;
+    }
+
+    span{
+        position: absolute;
+        display: block;
+        color: red;
+        font-size: 12px;
+    }
+}
