@@ -1,0 +1,25 @@
+.wrapper {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    input{
+        width: 100%;
+        height: 34px;
+        padding: 10px;
+        border: 1px solid var(--title-color);
+        border-radius: 10px;
+    }
+
+    input:focus-visible{
+        outline: 1px solid var(--title-color);
+    }
+
+    span{
+        position: absolute;
+        bottom: -2px;
+        color: red;
+        font-size: 12px;
+    }
+}
