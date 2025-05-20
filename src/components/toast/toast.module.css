@@ -1,0 +1,28 @@
+.wrapper {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast {
+    background-color: var(--bg-color-header);
+    color: var(--font-color);
+    padding: 15px;
+    border-radius: 8px;
+    width: max-content;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    will-change: transform, opacity;
+}
+
+.enter {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.exit {
+    opacity: 0;
+    transform: translateX(-100%);
+}
