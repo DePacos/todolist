@@ -15,7 +15,7 @@ export const Input = forwardRef<HTMLInputElement, Props>(
     const inputId = useId();
     return (
       <div className={classes.wrapper}>
-        <label htmlFor={id || inputId}>{label}</label>
+        {label && <label htmlFor={id || inputId}>{label}</label>}
         <input
           style={{ borderColor: error ? 'red' : '' }}
           type={type}
