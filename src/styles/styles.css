@@ -1,0 +1,43 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body[data-theme="dark"] {
+    --bg-color: #1f1f1f;
+    --bg-color-header: #282838;
+    --font-color: #ccc;
+    --title-color: #d3cefa;
+}
+
+body[data-theme="light"] {
+    --bg-color: #e2def7;
+    --bg-color-header: #9395d3;
+    --font-color: #333;
+    --title-color: #52469f;
+}
+
+body{
+    background-color: var(--bg-color);
+    color: var(--font-color);
+}
+
+header{
+    background-color: var(--bg-color-header);
+}
+
+h1, h2, h3 {
+    color: var(--title-color);
+}
+
+button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    transition: transform .3s;
+}
+
+button:hover{
+    transform: scale(1.15);
+}
