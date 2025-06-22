@@ -7,7 +7,7 @@ const APIKEY = import.meta.env.VITE_API_KEY || '';
 
 export const todolistApi = createApi({
   reducerPath: 'todolistApi',
-  tagTypes: ['Auth'],
+  tagTypes: ['Columns'],
   baseQuery: async (args, api, extraOptions) => {
     const result = await fetchBaseQuery({
       baseUrl: baseUrl,
