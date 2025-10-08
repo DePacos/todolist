@@ -1,9 +1,8 @@
 import { X } from 'lucide-react';
-import type { ReactNode } from 'react';
-import { useEffect } from 'react';
+import { type ReactNode, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 
-import classes from './modal.module.css';
+import classes from './Modal.module.css';
 
 type Props = {
   children: ReactNode;

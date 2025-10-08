@@ -18,8 +18,9 @@
 
     span{
         position: absolute;
-        bottom: -2px;
+        bottom: -20px;
         color: red;
         font-size: 12px;
+        white-space: nowrap;
     }
 }

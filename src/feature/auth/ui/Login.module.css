@@ -1,0 +1,19 @@
+.wrapper {
+    input {
+        margin-bottom: 20px;
+    }
+
+    span {
+        bottom: 0;
+    }
+
+    input[type="checkbox"] {
+        background-color: red;
+        margin-top: 10px;
+    }
+
+    div:nth-child(3) {
+        margin-bottom: 18px;
+    }
+
+}

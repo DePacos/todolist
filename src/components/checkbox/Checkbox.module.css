@@ -4,6 +4,7 @@
     label{
         cursor: pointer;
         color: var(--font-color);
+        font-size: 12px;
     }
 
     input {

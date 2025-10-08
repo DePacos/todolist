@@ -1,8 +1,9 @@
-import { FormCheckbox } from '@/components/checkbox/FormCheckbox.tsx';
-import { FormInput } from '@/components/input/FormInput.tsx';
-import { useLogin } from '@/feature/auth/model/useLogin.tsx';
+import { FormCheckbox, FormInput, Button } from '@/components';
+import { REGEX_EMAIL } from '@/constants';
 
-import classes from './login.module.css';
+import classes from './Login.module.css';
+
+import { useLogin } from '../model/useLogin.tsx';
 
 type Props = {
   handleOpenModal?: (isOpen: boolean) => void;
@@ -23,7 +24,7 @@ export const Login = ({ handleOpenModal }: Props) => {
             require: 'Email is require',
             maxLength: { value: 30, message: 'Email is long' },
             pattern: {
-              value: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}$/,
+              value: REGEX_EMAIL,
               message: 'Invalid email format',
             },
           }}
@@ -39,7 +40,7 @@ export const Login = ({ handleOpenModal }: Props) => {
           }}
         />
         <FormCheckbox control={control} name="rememberMe" label="rememberMe" />
-        <button type="submit">Login</button>
+        <Button />
       </form>
     </div>
   );

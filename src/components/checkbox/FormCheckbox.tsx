@@ -1,10 +1,9 @@
 import type { ComponentPropsWithoutRef } from 'react';
-import type { FieldValues } from 'react-hook-form';
-import { useController } from 'react-hook-form';
+import { type FieldValues, useController } from 'react-hook-form';
 
-import type { FormField } from '@/types/types.ts';
+import type { FormField } from '@/types';
 
-import { Checkbox } from '@/components/checkbox/Checkbox.tsx';
+import { Checkbox } from './Checkbox';
 
 type Props<T extends FieldValues> = {
   error?: boolean;

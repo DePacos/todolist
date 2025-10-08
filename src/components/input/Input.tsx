@@ -1,12 +1,13 @@
-import type { ComponentProps } from 'react';
-import { forwardRef, useId } from 'react';
+import { type ComponentProps, forwardRef, useId } from 'react';
 
-import classes from './input.module.css';
+import classes from './Input.module.css';
+
+export type InputTypes = 'password' | 'email';
 
 type Props = {
   label?: string;
   error?: string;
-  type?: 'text' | 'password' | 'email';
+  type?: InputTypes;
   id?: string;
 } & ComponentProps<'input'>;
 

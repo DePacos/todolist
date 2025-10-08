@@ -1,11 +1,11 @@
 import { type SubmitHandler, useForm } from 'react-hook-form';
 
-import type { Login } from '@/types/types.ts';
+import type { Login } from '@/types';
 
-import { setToken } from '@/app/reducer/appSlice.ts';
-import { RESULTCODE } from '@/constants/resultCode.ts';
-import { useLoginMutation } from '@/feature/auth/api/authApi.ts';
-import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { todolistApi } from '@/app/api/todolistApi.ts';
+import { ACCESS_TOKEN, RESPONSE_CODE } from '@/constants';
+import { useLoginMutation } from '@/feature/auth/api';
+import { useAppDispatch } from '@/hooks';
 
 export const useLogin = (handleOpenModal?: (isOpen: boolean) => void) => {
   const dispatch = useAppDispatch();
@@ -14,13 +14,13 @@ export const useLogin = (handleOpenModal?: (isOpen: boolean) => void) => {
 
   const onSubmit: SubmitHandler<Login> = async (data) => {
     const res = await login(data).unwrap();
-    if (res.resultCode === RESULTCODE.success) {
-      localStorage.setItem('access_token', res.data.token);
-      dispatch(setToken(res.data.token));
+    if (res.resultCode === RESPONSE_CODE.success) {
+      localStorage.setItem(ACCESS_TOKEN, res.data.token);
+      dispatch(todolistApi.util.invalidateTags(['Me']));
       handleOpenModal?.(false);
     }
 
-    if (res.resultCode === RESULTCODE.error) {
+    if (res.resultCode === RESPONSE_CODE.error) {
       setError('email', { type: 'server', message: ' ' });
       setError('password', { type: 'server', message: res.messages[0] });
     }

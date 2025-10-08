@@ -1,8 +1,6 @@
-import type { ComponentProps } from 'react';
-import { useId } from 'react';
-import { forwardRef } from 'react';
+import { type ComponentProps, useId, forwardRef } from 'react';
 
-import classes from './checkbox.module.css';
+import classes from './Checkbox.module.css';
 
 type Props = {
   id?: string;

@@ -1,13 +1,14 @@
+import type { InputTypes } from './Input';
+
 import type { ComponentPropsWithoutRef } from 'react';
-import type { FieldValues } from 'react-hook-form';
-import { useController } from 'react-hook-form';
+import { type FieldValues, useController } from 'react-hook-form';
 
-import type { FormField } from '@/types/types.ts';
+import type { FormField } from '@/types';
 
-import { Input } from '@/components/input/Input.tsx';
+import { Input } from './Input';
 
 type Props<T extends FieldValues> = {
-  type?: 'text' | 'password' | 'email';
+  type?: InputTypes;
   error?: string;
   label?: string;
 } & ComponentPropsWithoutRef<'input'> &
