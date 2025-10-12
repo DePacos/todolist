@@ -2,7 +2,7 @@ import { type SubmitHandler, useForm } from 'react-hook-form';
 
 import type { Login } from '@/types';
 
-import { todolistApi } from '@/app/api/todolistApi.ts';
+import { todolistApi } from '@/app/api';
 import { ACCESS_TOKEN, RESPONSE_CODE } from '@/constants';
 import { useLoginMutation } from '@/feature/auth/api';
 import { useAppDispatch } from '@/hooks';

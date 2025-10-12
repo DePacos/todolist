@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 import { ACCESS_TOKEN } from '@/constants';
-import { handleError } from '@/utils/handleError.ts';
+import { handleError } from '@/utils';
 
 const baseUrl = import.meta.env.VITE_BASE_API_URL || '';
 const APIKEY = import.meta.env.VITE_API_KEY || '';

@@ -1,6 +1,6 @@
-import type { Request, Response } from '@/types/types.ts';
+import type { Request, Response } from '@/types';
 
-import { todolistApi } from '@/app/api/todolistApi.ts';
+import { todolistApi } from '@/app/api';
 
 const authApi = todolistApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,9 +16,11 @@ const authApi = todolistApi.injectEndpoints({
         url: 'auth/login',
         method: 'DELETE',
       }),
+      invalidatesTags: ['Me'],
     }),
     me: builder.query<Response<{ userId: number; email: string }>, void>({
       query: () => 'auth/me',
+      providesTags: ['Me'],
     }),
   }),
 });

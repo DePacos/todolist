@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
-import { setError } from '@/app/reducer/appSlice.ts';
-import { useAppDispatch } from '@/hooks/useAppDispatch.ts';
+import { setError } from '@/app/reducer';
+import { useAppDispatch } from '@/hooks';
 
-import classes from './toast.module.css';
+import classes from './Toast.module.css';
 
 type Props = {
   error: string | null;

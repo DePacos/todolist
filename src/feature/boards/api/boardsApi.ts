@@ -1,6 +1,6 @@
-import type { Response, BoardsResponse } from '@/types/types.ts';
+import type { Response, BoardsResponse } from '@/types';
 
-import { todolistApi } from '@/app/api/todolistApi.ts';
+import { todolistApi } from '@/app/api';
 
 const boardsApi = todolistApi.injectEndpoints({
   endpoints: (builder) => ({
