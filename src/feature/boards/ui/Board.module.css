@@ -1,0 +1,88 @@
+.wrapperBoard {
+    width: 260px;
+    border: 1px solid var(--title-color);
+    border-radius: 10px;
+    padding: 10px;
+    height: 50px;
+    cursor: pointer;
+
+    &:hover {
+        border-style: dashed;
+        border-width: 1.5px;
+    }
+}
+
+.wrapperBoardTitle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+
+    h2{
+        flex-grow: 1;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 165px;
+        font-size: 20px;
+    }
+}
+
+.wrapperBoardEditTitle {
+    position: relative;
+
+    h2 {
+        position: absolute;
+        top: -20px;
+        font-size: 12px;
+        padding: 0 5px;
+        background-color: var(--bg-color-task);
+    }
+}
+
+.wrapperAddTitle {
+    h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+    }
+}
+
+.wrapperTitle {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    text-decoration: none;
+
+    button {
+        margin-top: 5px;
+    }
+
+    button + button {
+        margin-left: 10px;
+    }
+}
+
+.boardTitle {
+    font-size: 16px;
+}
+
+.boardForm {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.wrapperInput {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.modalTitle {
+    font-weight: 500;
+
+    span {
+        font-weight: 700;
+        text-decoration: underline;
+    }
+}
