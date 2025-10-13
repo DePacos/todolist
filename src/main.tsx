@@ -1,9 +1,16 @@
 import ReactDOM from 'react-dom/client';
+import 'react-loading-skeleton/dist/skeleton.css';
 
-import '../src/assets/fonts/fonts.css';
-import './styles/global.css';
+import { DefaultLayout } from '@/app/layout';
+import { providers } from '@/providers/providers';
+import { ProviderComposer } from '@/providers/ProvidersComposer';
 
-import { App } from './App';
+import '@/assets/fonts/fonts.css';
+import '@/styles/styles.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
-root.render(<App />);
+root.render(
+  <ProviderComposer providers={providers}>
+    <DefaultLayout />
+  </ProviderComposer>,
+);
