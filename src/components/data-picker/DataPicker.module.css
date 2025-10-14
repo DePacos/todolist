@@ -1,0 +1,21 @@
+.wrapperDataPicker {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    input {
+        padding: 5px;
+        border: 1px solid var(--title-color);
+        border-radius: 10px;
+        background-color: var(--bg-color-inputs);
+    }
+
+    input:focus-visible{
+        outline: 1px solid var(--title-color);
+    }
+
+    span {
+        left: 0;
+    }
+}
