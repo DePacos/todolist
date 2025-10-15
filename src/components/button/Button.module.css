@@ -1,4 +1,21 @@
-.button {
+button {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    transition: transform .3s;
+}
+
+button:hover{
+    transform: scale(1.15);
+}
+
+button:disabled {
+    cursor: not-allowed;
+    transform: scale(1);
+    opacity: .5;
+}
+
+button[data-variant='primary'] {
     width: 100%;
     padding: 8px;
     font-size: 16px;
@@ -7,6 +24,8 @@
     background-color: var(--bg-color-btn);
 }
 
-.button:hover {
+button[data-variant='primary']:hover {
     transform: scale(1.05);
 }
+
+

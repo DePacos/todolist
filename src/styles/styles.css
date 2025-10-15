@@ -1,3 +1,7 @@
+:root {
+    --header-height: 85px;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -7,6 +11,9 @@
 body[data-theme="dark"] {
     --bg-color: #1f1f1f;
     --bg-color-header: #282838;
+    --bg-color-task: #393951;
+    --bg-color-btn: #38383c;
+    --bg-color-inputs: #e3e3ee;
     --font-color: #ccc;
     --title-color: #d3cefa;
 }
@@ -14,6 +21,9 @@ body[data-theme="dark"] {
 body[data-theme="light"] {
     --bg-color: #e2def7;
     --bg-color-header: #9395d3;
+    --bg-color-task: #bdbde3;
+    --bg-color-btn: #9395d3;
+    --bg-color-inputs: #e3e3ee;
     --font-color: #333;
     --title-color: #52469f;
 }
@@ -25,19 +35,22 @@ body{
 
 header{
     background-color: var(--bg-color-header);
+    height: var(--header-height);
 }
 
 h1, h2, h3 {
     color: var(--title-color);
 }
 
-button {
-    background-color: transparent;
-    cursor: pointer;
-    border: none;
-    transition: transform .3s;
+ul {
+    list-style: none;
+    padding: 0;
 }
 
-button:hover{
-    transform: scale(1.15);
+.inputError{
+    position: absolute;
+    bottom: -20px;
+    color: red;
+    font-size: 12px;
+    white-space: nowrap;
 }

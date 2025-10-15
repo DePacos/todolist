@@ -3,12 +3,16 @@ import { forwardRef } from 'react';
 
 import classes from './Button.module.css';
 
-type Props = {} & ComponentProps<'button'>;
+type Props = {
+  variant?: 'primary';
+} & ComponentProps<'button'>;
 
-export const Button = forwardRef<HTMLButtonElement, Props>(({ children, ...props }, ref) => {
-  return (
-    <button ref={ref} className={classes.button} {...props}>
-      {children}
-    </button>
-  );
-});
+export const Button = forwardRef<HTMLButtonElement, Props>(
+  ({ children, variant, ...props }, ref) => {
+    return (
+      <button data-variant={variant} ref={ref} className={classes.button} {...props}>
+        {children}
+      </button>
+    );
+  },
+);

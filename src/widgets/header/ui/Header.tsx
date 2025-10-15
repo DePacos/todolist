@@ -1,12 +1,11 @@
 import { LogIn, LogOut, Moon, Sun } from 'lucide-react';
 import Skeleton from 'react-loading-skeleton';
 
-import { Modal, Toast } from '@/components';
+import { Button, Modal, Toast } from '@/components';
 import { Login } from '@/feature/auth/ui';
+import { useHeader } from '@/widgets/header/model';
 
 import classes from './Header.module.css';
-
-import { useHeader } from '../model/useHeader';
 
 export const Header = ({ isAuth }: { isAuth: boolean }) => {
   const {
@@ -26,27 +25,29 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
       <div className={classes.btn}>
         {isAuth ? (
           <>
-            <button onClick={handleChangeTheme} title="change theme">
+            <Button variant="default" onClick={handleChangeTheme} title="change theme">
               {theme === 'light' ? (
                 <Moon size={36} color="var(--title-color)" />
               ) : (
                 <Sun size={36} color="var(--title-color)" />
               )}
-            </button>
-            <button onClick={handleLogout} title="logout">
+            </Button>
+            <Button variant="default" onClick={handleLogout} title="logout">
               <LogOut size={36} color="var(--title-color)" />
-            </button>
+            </Button>
           </>
         ) : (
-          <button onClick={() => handleModalLogin(true)} title="login">
+          <Button onClick={() => handleModalLogin(true)} title="login">
             <LogIn size={36} color="var(--title-color)" />
-          </button>
+          </Button>
         )}
       </div>
-      <Modal isOpen={isOpenLogin} setIsOpen={handleModalLogin}>
-        <Login handleOpenModal={handleModalLogin} />
-      </Modal>
-      <Toast error={appError} />
+      {isOpenLogin && (
+        <Modal isOpen={isOpenLogin} setIsOpen={handleModalLogin}>
+          <Login handleOpenModal={handleModalLogin} />
+        </Modal>
+      )}
+      {appError && <Toast error={appError} />}
       {(isAppLoading || isLogoutLoading) && (
         <div className={classes.wrapperSkeleton}>
           <Skeleton className={classes.skeleton} />
