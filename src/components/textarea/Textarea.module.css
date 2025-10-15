@@ -1,0 +1,30 @@
+.wrapperTextArea {
+    position: relative;
+
+    textarea {
+        width: 100%;
+        height: 150px;
+        padding: 10px;
+        border: 1px solid var(--title-color);
+        border-radius: 10px;
+        background-color: var(--bg-color-inputs);
+        resize: none;
+    }
+
+    textarea:focus-visible{
+        outline: 1px solid var(--title-color);
+    }
+
+    label {
+        display: inline-block;
+        margin-bottom: 5px;
+    }
+
+    span {
+        left: 0;
+    }
+}
+
+.wrapperTextArea .error {
+    border-color: red;
+}
