@@ -1,0 +1,22 @@
+.wrapperSelect {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    select {
+        width: 100px;
+        padding: 5px 10px 5px 5px;
+        border: 1px solid var(--title-color);
+        border-radius: 10px;
+        background-color: var(--bg-color-inputs);
+    }
+
+    select:focus-visible{
+        outline: 1px solid var(--title-color);
+    }
+}
+
+.wrapperSelect .error {
+    border-color: red;
+}
