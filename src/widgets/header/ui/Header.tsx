@@ -25,14 +25,14 @@ export const Header = ({ isAuth }: { isAuth: boolean }) => {
       <div className={classes.btn}>
         {isAuth ? (
           <>
-            <Button variant="default" onClick={handleChangeTheme} title="change theme">
+            <Button onClick={handleChangeTheme} title="change theme">
               {theme === 'light' ? (
                 <Moon size={36} color="var(--title-color)" />
               ) : (
                 <Sun size={36} color="var(--title-color)" />
               )}
             </Button>
-            <Button variant="default" onClick={handleLogout} title="logout">
+            <Button onClick={handleLogout} title="logout">
               <LogOut size={36} color="var(--title-color)" />
             </Button>
           </>
