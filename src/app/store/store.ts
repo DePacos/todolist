@@ -1,8 +1,8 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 
-import { todolistApi } from '@/app/api/todolistApi.ts';
-import { appSlice } from '@/app/reducer/appSlice.ts';
-import { loadingMiddleware } from '@/utils/loadingMiddleware.ts';
+import { todolistApi } from '@/app/api';
+import { appSlice } from '@/app/reducer';
+import { loadingMiddleware } from '@/utils';
 
 const rootReducer = combineReducers({
   [todolistApi.reducerPath]: todolistApi.reducer,

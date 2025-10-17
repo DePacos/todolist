@@ -2,7 +2,7 @@ import type { Middleware } from '@reduxjs/toolkit';
 
 import { isFulfilled, isPending, isRejected } from '@reduxjs/toolkit';
 
-import { setIsLoading } from '@/app/reducer/appSlice.ts';
+import { setIsLoading } from '@/app/reducer';
 
 export const loadingMiddleware: Middleware = (store) => (next) => (action) => {
   if (isPending(action)) {
