@@ -18,13 +18,13 @@ export const Input = forwardRef<HTMLInputElement, Props>(
       <div className={classes.wrapper}>
         {label && <label htmlFor={id || inputId}>{label}</label>}
         <input
-          style={{ borderColor: error ? 'red' : '' }}
+          className={error ? classes.error : ''}
           type={type}
           ref={ref}
           id={id || inputId}
           {...props}
         />
-        {error && <span>{error}</span>}
+        {error && <span className="inputError">{error}</span>}
       </div>
     );
   },
