@@ -1,0 +1,20 @@
+.board {
+    > button {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+}
+
+.wrapperBoards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.wrapperActiveBoards {
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+}
