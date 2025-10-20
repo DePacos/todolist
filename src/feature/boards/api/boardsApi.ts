@@ -1,10 +1,16 @@
-import type { Response, BoardsResponse } from '@/types';
+import type {
+  Response,
+  GetBoardsResponse,
+  AddBoardRequest,
+  UpdateBoardRequest,
+  OrderBoardsRequest,
+} from '@/types';
 
 import { todolistApi } from '@/app/api';
 
 const boardsApi = todolistApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBoards: builder.query<BoardsResponse[], void>({
+    getBoards: builder.query<GetBoardsResponse[], void>({
       query: () => 'todo-lists',
       providesTags: (result) =>
         result
@@ -14,7 +20,7 @@ const boardsApi = todolistApi.injectEndpoints({
             ]
           : [{ type: 'Boards', id: 'LIST' }],
     }),
-    addBoard: builder.mutation<Response<BoardsResponse>, { title: string }>({
+    addBoard: builder.mutation<Response<GetBoardsResponse>, AddBoardRequest>({
       query: (body) => ({
         url: 'todo-lists',
         method: 'POST',
@@ -22,7 +28,7 @@ const boardsApi = todolistApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Boards', id: 'LIST' }],
     }),
-    updateBoard: builder.mutation<Response<{}>, { id: string; title: string }>({
+    updateBoard: builder.mutation<Response<{}>, UpdateBoardRequest>({
       query: ({ id, ...body }) => ({
         url: `todo-lists/${id}`,
         method: 'PUT',
@@ -37,7 +43,7 @@ const boardsApi = todolistApi.injectEndpoints({
       }),
       invalidatesTags: [{ type: 'Boards', id: 'LIST' }],
     }),
-    orderBoards: builder.mutation<Response<{}>, { id: string; putAfterItemId: string | null }>({
+    orderBoards: builder.mutation<Response<{}>, OrderBoardsRequest>({
       query: ({ id, ...body }) => ({
         url: `todo-lists/${id}/reorder`,
         method: 'PUT',

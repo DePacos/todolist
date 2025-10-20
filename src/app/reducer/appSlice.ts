@@ -1,13 +1,19 @@
 import { createSlice } from '@reduxjs/toolkit';
 
+import type { AppInitialState, ThemeMode } from '@/types';
+
+import { SLICE_NAME, THEME_MODE } from '@/constants';
+
+const themeMode = (localStorage.getItem('themeMode') || THEME_MODE.light) as ThemeMode;
+const initialState: AppInitialState = {
+  theme: themeMode,
+  error: null,
+  isAppLoading: false,
+};
+
 export const appSlice = createSlice({
-  name: 'app',
-  initialState: {
-    theme: localStorage.getItem('theme') || 'light',
-    error: null as string | null,
-    isAppLoading: false,
-    token: null as null | string,
-  },
+  name: SLICE_NAME.app,
+  initialState,
   reducers: {
     setTheme: (state, action) => {
       state.theme = action.payload;
@@ -18,17 +24,13 @@ export const appSlice = createSlice({
     setIsLoading: (state, action) => {
       state.isAppLoading = action.payload;
     },
-    setToken: (state, action) => {
-      state.token = action.payload;
-    },
   },
   selectors: {
     selectTheme: (state) => state.theme,
     selectError: (state) => state.error,
     selectLoading: (state) => state.isAppLoading,
-    selectToken: (state) => state.token,
   },
 });
 
-export const { selectTheme, selectError, selectLoading, selectToken } = appSlice.selectors;
-export const { setTheme, setError, setIsLoading, setToken } = appSlice.actions;
+export const { selectTheme, selectError, selectLoading } = appSlice.selectors;
+export const { setTheme, setError, setIsLoading } = appSlice.actions;
