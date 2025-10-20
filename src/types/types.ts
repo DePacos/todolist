@@ -16,7 +16,6 @@ export type PutAfterItem = { putAfterItemId: string | null };
 
 // auth
 export type LoginResponse = { userId: number; token: string };
-export type LoginRequest = { email: string; password: string; rememberMe?: boolean };
 export type MeResponse = { userId: number; email: string };
 
 // boarder

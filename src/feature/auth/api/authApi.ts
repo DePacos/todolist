@@ -1,14 +1,15 @@
-import type { Request, Response } from '@/types';
+import type { LoginRequest } from '@/schemas';
+import type { LoginResponse, MeResponse, Response } from '@/types';
 
 import { todolistApi } from '@/app/api';
 
 const authApi = todolistApi.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation<Response<{ userId: number; token: string }>, Request>({
-      query: (data) => ({
+    login: builder.mutation<Response<LoginResponse>, LoginRequest>({
+      query: (body) => ({
         url: 'auth/login',
         method: 'POST',
-        body: data,
+        body,
       }),
     }),
     logout: builder.mutation<Response<{}>, void>({
@@ -18,7 +19,7 @@ const authApi = todolistApi.injectEndpoints({
       }),
       invalidatesTags: ['Me'],
     }),
-    me: builder.query<Response<{ userId: number; email: string }>, void>({
+    me: builder.query<Response<MeResponse>, void>({
       query: () => 'auth/me',
       providesTags: ['Me'],
     }),
