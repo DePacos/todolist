@@ -9,7 +9,7 @@ import {
 } from '@dnd-kit/core';
 
 import { useGetBoardsQuery, useOrderBoardsMutation } from '@/feature/boards/api';
-import { getOrderParam } from '@/utils';
+import { getOrderParams } from '@/utils';
 
 export const useBoards = () => {
   const [activeBoardId, setActiveBoardId] = useState<string | null>(null);
@@ -35,7 +35,7 @@ export const useBoards = () => {
   };
 
   const handleDragEndBoard = (event: DragEndEvent) => {
-    const { activeId, putAfterItemId } = getOrderParam(event);
+    const { activeId, putAfterItemId } = getOrderParams(event);
 
     if (!activeId && !putAfterItemId) return;
 

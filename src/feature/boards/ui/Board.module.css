@@ -1,15 +1,12 @@
 .wrapperBoard {
+    display: flex;
     width: 260px;
-    border: 1px solid var(--title-color);
-    border-radius: 10px;
-    padding: 10px;
     height: 50px;
-    cursor: pointer;
 
-    &:hover {
-        border-style: dashed;
-        border-width: 1.5px;
+    h2 {
+        font-size: 20px;
     }
+
 }
 
 .wrapperBoardTitle {
@@ -30,10 +27,13 @@
 
 .wrapperBoardEditTitle {
     position: relative;
+    border: 1px solid var(--title-color);
+    border-radius: 10px;
+    padding: 0 10px;
 
     h2 {
         position: absolute;
-        top: -20px;
+        top: -15px;
         font-size: 12px;
         padding: 0 5px;
         background-color: var(--bg-color-task);
@@ -47,12 +47,16 @@
     }
 }
 
-.wrapperTitle {
+.wrapperTitleLink {
     display: flex;
     justify-content: space-between;
     width: 100%;
     align-items: center;
     text-decoration: none;
+    cursor: grab;
+    border: 1px solid var(--title-color);
+    border-radius: 10px;
+    padding: 0 10px;
 
     button {
         margin-top: 5px;
@@ -60,6 +64,11 @@
 
     button + button {
         margin-left: 10px;
+    }
+
+    &:hover {
+        border-style: dashed;
+        border-width: 1.5px;
     }
 }
 
@@ -75,14 +84,10 @@
 
 .wrapperInput {
     display: flex;
+    height: 100%;
     flex-direction: row-reverse;
 }
 
-.modalTitle {
-    font-weight: 500;
-
-    span {
-        font-weight: 700;
-        text-decoration: underline;
-    }
+div[data-dragging-board = 'dragging'] {
+    opacity: 0;
 }

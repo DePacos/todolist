@@ -2,14 +2,17 @@ import { Check, CirclePlus } from 'lucide-react';
 import { useRef } from 'react';
 import { useForm } from 'react-hook-form';
 
-import type { FormColumnData } from '@/types';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import type { BoardFormType } from '@/schemas';
 
 import { FormInput } from '@/components';
+import { boardSchema } from '@/schemas';
 
 import classes from './Board.module.css';
 
 type Props = {
-  onSubmit: (data: FormColumnData) => void;
+  onSubmit: (data: BoardFormType) => void;
   isEditMode?: boolean;
   defaultValue?: string;
   isLoading?: boolean;
@@ -24,10 +27,11 @@ export const BoardForm = ({ isEditMode, onSubmit, defaultValue, isLoading, error
     control,
     formState: { isValid },
     reset,
-  } = useForm<FormColumnData>({ mode: 'onChange' });
+  } = useForm<BoardFormType>({ mode: 'onChange', resolver: zodResolver(boardSchema) });
 
   if (isEditMode && editModeRef.current) {
     editModeRef.current = false;
+
     reset({
       title: defaultValue || '',
     });
@@ -35,18 +39,7 @@ export const BoardForm = ({ isEditMode, onSubmit, defaultValue, isLoading, error
 
   return (
     <form className={classes.boardForm} onSubmit={handleSubmit(onSubmit)}>
-      <FormInput
-        error={error}
-        disabled={isLoading}
-        maxLength={21}
-        control={control}
-        name="title"
-        placeholder="Column name"
-        rules={{
-          required: 'Column name is require',
-          maxLength: { value: 20, message: 'Name is long' },
-        }}
-      />
+      <FormInput error={error} disabled={isLoading} maxLength={21} control={control} name="title" />
       <button disabled={!isValid}>
         {isEditMode ? (
           <Check size="24" color="green" />

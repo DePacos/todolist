@@ -24,7 +24,7 @@ export const Boards = () => {
 
   return boards ? (
     <DndContext sensors={sensors} onDragStart={handleDragStartBoard} onDragEnd={handleDragEndBoard}>
-      <div className={classes.board}>
+      <div className={classes.wrapper}>
         <Button variant="primary" onClick={() => handleModalAddBoard(true)}>
           Add board <CopyPlus size={20} color="var(--title-color)" />
         </Button>
@@ -39,13 +39,7 @@ export const Boards = () => {
         </div>
       </div>
       {createPortal(
-        <DragOverlay>
-          {activeBoard && (
-            <div className={classes.wrapperActiveBoards}>
-              <Board board={activeBoard} />
-            </div>
-          )}
-        </DragOverlay>,
+        <DragOverlay>{activeBoard && <Board board={activeBoard} />}</DragOverlay>,
         document.body,
       )}
       {isOpenAddBoard && (

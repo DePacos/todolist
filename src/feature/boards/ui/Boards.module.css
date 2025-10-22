@@ -1,4 +1,4 @@
-.board {
+.wrapper {
     > button {
         display: flex;
         justify-content: center;
@@ -12,9 +12,4 @@
     flex-direction: column;
     justify-content: center;
     gap: 20px;
-}
-
-.wrapperActiveBoards {
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.3);
 }
