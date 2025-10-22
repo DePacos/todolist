@@ -54,3 +54,12 @@ ul {
     font-size: 12px;
     white-space: nowrap;
 }
+
+.modalConfirmation {
+    font-weight: 500;
+
+    span {
+        font-weight: 700;
+        text-decoration: underline;
+    }
+}

@@ -27,10 +27,10 @@ export const ModalConfirmation = ({ title, isOpen, setIsOpen, onConfirm }: Props
       <div className={classes.wrapper}>
         {title}
         <div className={classes.wrapperModalBtn}>
-          <Button onClick={handleConfirmation}>
+          <Button variant="primary" onClick={handleConfirmation}>
             <Check size="24" color="green" /> Ok
           </Button>
-          <Button onClick={handelClose}>
+          <Button variant="primary" onClick={handelClose}>
             <X size="24" color="red" />
             Cancel
           </Button>

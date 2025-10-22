@@ -23,8 +23,8 @@ export const useHeader = () => {
     const newTheme = theme === THEME_MODE.light ? THEME_MODE.dark : THEME_MODE.light;
 
     dispatch(setTheme(newTheme));
-    localStorage.setItem('themeMode', newTheme);
-    document.body.setAttribute('data-theme', newTheme);
+    localStorage.setItem(THEME_MODE.name, newTheme);
+    document.body.setAttribute(THEME_MODE.dataAtr, newTheme);
   };
 
   const handleLogout = () => {
@@ -33,7 +33,7 @@ export const useHeader = () => {
   };
 
   useEffect(() => {
-    document.body.setAttribute('data-theme', theme);
+    document.body.setAttribute(THEME_MODE.dataAtr, theme);
   }, []);
 
   return {
