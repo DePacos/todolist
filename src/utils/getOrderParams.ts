@@ -1,22 +1,22 @@
 import type { DragEndEvent } from '@dnd-kit/core';
 
-export const getOrderParam = (event: DragEndEvent) => {
+export const getOrderParams = (event: DragEndEvent) => {
   const { active, over } = event;
 
   if (!over || active.id === over.id) return { activeId: '', putAfterItemId: '' };
 
   const ids: string[] = active.data.current?.sortable.items || [];
-  const oldIndex = ids.findIndex((id) => id === active.id);
-  const newIndex = ids.findIndex((id) => id === over.id);
+  const activeIndex = ids.findIndex((id) => id === active.id);
+  const overIndex = ids.findIndex((id) => id === over.id);
 
-  let putAfterItemId: string = '';
+  let putAfterItemId: string | null = null;
 
-  if (oldIndex < newIndex) putAfterItemId = over.id as string;
+  if (activeIndex < overIndex) putAfterItemId = over.id as string;
 
-  if (oldIndex > newIndex) {
-    const prev = ids[newIndex - 1];
+  if (activeIndex > overIndex) {
+    const prev = ids[overIndex - 1];
 
-    putAfterItemId = prev || '';
+    putAfterItemId = prev || null;
   }
 
   return {
