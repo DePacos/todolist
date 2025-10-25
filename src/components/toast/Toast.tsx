@@ -42,7 +42,7 @@ export const Toast = ({ error }: Props) => {
   }, [queue[0]]);
 
   useEffect(() => {
-    if (queue.length === 0) {
+    if (!queue.length && !visible) {
       dispatch(setError(null));
     }
   }, [queue]);
