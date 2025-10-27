@@ -4,3 +4,7 @@ export * from './modal';
 export * from './toast';
 export * from './button';
 export * from './modal-confirmation';
+export * from './textarea';
+export * from './select';
+export * from './data-picker';
+export * from './error';
