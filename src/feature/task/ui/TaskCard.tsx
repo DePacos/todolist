@@ -54,7 +54,7 @@ export const TaskCard = ({ task }: Props) => {
       }}
       data-dragging-task={isDragging && !isEditMode && 'dragging'}
       data-done-task={isDone && 'done'}
-      ref={isEditMode ? null : setNodeRef}
+      ref={setNodeRef}
       {...attributes}
       {...listeners}
     >

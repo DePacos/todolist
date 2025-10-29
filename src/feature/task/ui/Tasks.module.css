@@ -1,0 +1,72 @@
+.wrapperTasks {
+    display: flex;
+    gap: 20px;
+}
+
+.wrapperTasksColumn {
+    position: relative;
+    width: 300px;
+    min-height: 200px;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: var(--bg-color-task);
+}
+
+div[data-no-tasks='noTasks'] {
+    min-height: 0;
+    margin-top: 35.5px;
+}
+
+.taskColumnTitle {
+    font-weight: 700;
+    padding: 10px;
+    margin: -10px -10px 15px -10px;
+    border-radius: 10px 10px 0 0;
+    color: var(--title-color);
+    background-color: var(--bg-color-header);
+}
+
+.addTaskButton {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    right: 5px;
+    top: 10px;
+    width: 40px;
+}
+
+.addTaskForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 15px;
+    border: 1px solid var(--title-color);
+    border-radius: 10px;
+}
+
+.wrapperTitleTaskForm {
+    display: flex;
+    gap: 15px;
+}
+
+.wrapperEditBtnForm {
+    display: flex;
+    gap: 5px;
+}
+
+.wrapperSelectTaskForm {
+    display: flex;
+    align-items: end;
+    gap: 30px;
+    margin-bottom: 5px;
+
+    label {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    input, select {
+        font-size: 12px;
+    }
+}
