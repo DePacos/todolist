@@ -39,7 +39,8 @@ export type TaskItem = {
 };
 
 export type AddTaskRequest = Partial<TaskItem> & Pick<TaskItem, 'title'> & BoardId;
-export type UpdateTaskRequest = { taskId: string } & AddTaskRequest;
+export type UpdateTaskRequest = BoardId & { taskId: string } & Partial<TaskItem> &
+  Pick<TaskItem, 'title' | 'status'>;
 export type OrderTaskRequest = { boardId: string; taskId: string } & PutAfterItem;
 export type DeleteTaskRequest = { boardId: string; taskId: string };
 
