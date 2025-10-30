@@ -4,7 +4,7 @@ import type { AppInitialState, ThemeMode } from '@/types';
 
 import { SLICE_NAME, THEME_MODE } from '@/constants';
 
-const themeMode = (localStorage.getItem('themeMode') || THEME_MODE.light) as ThemeMode;
+const themeMode = (localStorage.getItem(THEME_MODE.name) || THEME_MODE.light) as ThemeMode;
 const initialState: AppInitialState = {
   theme: themeMode,
   error: null,
