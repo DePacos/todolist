@@ -5,8 +5,8 @@ import type {
   QueryReturnValue,
 } from '@reduxjs/toolkit/query/react';
 
-import { setError } from '@/app/reducer/appSlice.ts';
-import { RESULTCODE } from '@/constants/resultCode';
+import { setError } from '@/app/reducer';
+import { RESPONSE_CODE } from '@/constants';
 
 import { isErrorWithMessage } from './isErrorWithMessage';
 
@@ -26,6 +26,9 @@ export const handleError = (
       case 400:
         error = '400 Bad Request';
         break;
+      case 401:
+        error = '401 Unauthorized';
+        break;
       case 403:
         error = '403 Forbidden';
         break;
@@ -43,9 +46,9 @@ export const handleError = (
     api.dispatch(setError(error));
   }
 
-  if (api.endpoint === 'login' || api.endpoint === 'me') return;
+  if (api.endpoint === 'login') return;
 
-  if ((result.data as { resultCode: number }).resultCode === RESULTCODE.error) {
+  if (result.data && (result.data as { resultCode: number }).resultCode === RESPONSE_CODE.error) {
     const messages = (result.data as { messages: string[] }).messages;
     error = messages.length ? messages[0] : error;
     api.dispatch(setError(error));
